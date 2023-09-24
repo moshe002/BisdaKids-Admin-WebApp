@@ -51,13 +51,18 @@ function TableDailyTask({ checker, setChecker }) {
                                 return(
                                     <tr key={index}>
                                         <td>
-                                            <EditTaskButton />
+                                            <EditTaskButton 
+                                                setChecker={setChecker}
+                                                taskId={data.task_id} 
+                                                taskTitle={data.task_title}
+                                                taskDesc={data.task_desc}
+                                                coinQuantity={data.coin_quantity} />
                                         </td>
                                         <td className='p-3 border-2'>{data.task_title}</td>
                                         <td className='p-3 border-2'>{data.task_desc}</td>
                                         <td className='p-3 border-2'>{data.coin_quantity}</td>
                                         <td>
-                                            <DeleteTaskButton />
+                                            <DeleteTaskButton taskId={data.task_id} setChecker={setChecker} />
                                         </td>
                                     </tr>
                                 )

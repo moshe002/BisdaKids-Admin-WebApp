@@ -5,22 +5,21 @@ import Loading from '../components/Loading'
 // user
 import DeleteUserButton from '../components/userComponents/DeleteUserButton'
 import EditUserButton from '../components/userComponents/EditUserButton'
-// inventory
-import DeleteInventoryBtn from '../components/userComponents/DeleteInventoryBtn'
-import EditInventoryBtn from '../components/userComponents/EditInventoryBtn'
 
 function Users() {
 
     const [userData, setUserData] = useState([])
     const [userInventory, setUserInventory] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [checker, setChecker] = useState(false)
 
   useEffect(() => {
     getUserData()
     //fetchFromBackend()
-  }, [])
+  }, [checker])
 
   const getUserData = async () => {   
+    setChecker(false)
     setIsLoading(true) 
     const { data, error } = await supabase
     .from('user_account')
@@ -72,7 +71,7 @@ function Users() {
         :
         <>
           <div className='flex flex-col gap-3 p-3'>
-            <h1 className='text-2xl text-center font-bold'>Users/Players</h1>
+            <h1 className='text-2xl text-center font-bold text-blue-500'>Users/Players</h1>
             <table className='table-auto'>
                 <tbody>
                     <tr className=''>
@@ -87,13 +86,13 @@ function Users() {
                             return(
                                 <tr className='text-center' key={index}>
                                     <td>
-                                      <EditUserButton />
+                                      <EditUserButton setChecker={setChecker} userId={data.user_id} username={data.user_name} password={data.user_password} />
                                     </td>
                                     <td className='p-3 border-2'>{data.user_id}</td>
                                     <td className='p-3 border-2'>{data.user_name}</td>
                                     <td className='p-3 border-2'>{data.user_password}</td>
                                     <td>
-                                      <DeleteUserButton />
+                                      <DeleteUserButton userId={data.user_id} setChecker={setChecker} />
                                     </td>
                                 </tr>
                             )
@@ -103,27 +102,21 @@ function Users() {
             </table>
           </div>
           <div className='flex flex-col gap-3 p-3'>
-              <h1 className='text-2xl text-center font-bold'>User Inventory</h1>
+              <h1 className='text-2xl text-center font-bold text-blue-500'>User Inventory</h1>
               <table className='table-auto'>
                   <tbody>
                       <tr className=''>
-                          <th></th>
+                          <th className='p-3 border-2'>User ID</th>
                           <th className='p-3 border-2'>Item ID</th>
                           <th className='p-3 border-2'>Quantity</th>
-                          <th></th>
                       </tr>
                       {
                           userInventory.map((data, index) => {
                               return(
                                   <tr className='text-center' key={index}>
-                                      <td>
-                                        <EditInventoryBtn />
-                                      </td>
+                                      <td className='p-3 border-2'>{data.user_id}</td>
                                       <td className='p-3 border-2'>{data.item_id}</td>
                                       <td className='p-3 border-2'>{data.quantity}</td>
-                                      <td>
-                                        <DeleteInventoryBtn />
-                                      </td>
                                   </tr>
                               )
                           })

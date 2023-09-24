@@ -1,4 +1,5 @@
 import React from 'react'
+import { AiOutlineCloseCircle } from 'react-icons/ai'
 
 function SuccessSubmit({ setSuccessSubmit, setChecker }) {
 
@@ -12,10 +13,12 @@ function SuccessSubmit({ setSuccessSubmit, setChecker }) {
         <div className='flex flex-col items-center gap-5 p-5 bg-white shadow-2xl rounded-md'>
             <h1 className='text-4xl font-bold text-green-500'>Submitted!</h1>
             <button
-              className='p-3 bg-red-400 hover:bg-red-500 text-white text-xl font-semibold rounded-md' 
+              className='p-1 hover:bg-red-500 rounded-full duration-150' 
               type='button'
               onClick={handleClick}>
-                CLOSE
+                <p className='text-4xl'>
+                  <AiOutlineCloseCircle />
+                </p>
             </button>
         </div>
     </div>

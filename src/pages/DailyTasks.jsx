@@ -39,7 +39,7 @@ function DailyTasks() {
         <h1 className='text-2xl text-center font-bold text-orange-400'>Add Daily Tasks</h1>
         <form onSubmit={handleSentTask} className='flex flex-col items-center p-5 gap-5'>
           <div className='flex flex-col text-center'>
-            <label htmlFor="taskTitle">Task Title</label>
+            <label className='text-lg font-semibold' htmlFor="taskTitle">Task Title</label>
             <input 
               className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
               type="text" 
@@ -49,7 +49,7 @@ function DailyTasks() {
               required />
           </div>
           <div className='flex flex-col text-center'>
-            <label htmlFor="taskDesc">Task Description</label>
+            <label className='text-lg font-semibold' htmlFor="taskDesc">Task Description</label>
             <textarea 
               className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150'
               name="taskDesc" 
@@ -62,7 +62,7 @@ function DailyTasks() {
             </textarea>
           </div>
           <div className='flex flex-col text-center'>
-            <label htmlFor="coinQuantity">Coin Quantity</label>
+            <label className='text-lg font-semibold' htmlFor="coinQuantity">Coin Quantity</label>
             <input 
               className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
               type="number" 
