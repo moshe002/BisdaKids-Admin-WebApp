@@ -52,7 +52,7 @@ function Signup() {
             </div>
             <div className="flex flex-col justify-center p-3 gap-7">
                 <h1 className="font-semibold text-2xl">Sign Up</h1>
-                <form className="flex flex-col gap-5" onSubmit={handleSignup}>
+                <form className="flex flex-col gap-5 mb-5" onSubmit={handleSignup}>
                     <div className="flex flex-row justify-center gap-7">
                         <input 
                             className="w-36 bg-gray-200 p-3 rounded-md placeholder-black focus:outline-blue-500" 
@@ -89,7 +89,7 @@ function Signup() {
                         type="password" id="confirmpass" name="confirmpass" placeholder="Confirm Password" 
                         onChange={(e) => handleFormInputs(e)} required />
                     <button 
-                        className="bg-blue-500 p-3 rounded-md text-white mt-7 w-80 focus:outline-blue-500"
+                        className="bg-blue-500 p-3 rounded-md text-white text-xl font-bold mt-7 w-80 focus:outline-blue-500"
                         type="submit">Register</button>
                 </form>
             </div>

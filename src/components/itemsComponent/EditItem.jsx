@@ -2,13 +2,12 @@ import React, { useState } from 'react'
 import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
 
-function EditUserButton({ userId, username, password, setChecker }) {
+function EditItem({ itemId, itemName, itemDesc, itemPrice, setChecker }) {
 
   const [showEditModal, setShowEditModal] = useState(false)
   const [successEdit, setSuccessEdit] = useState(false)
 
   const handleClick = () => setShowEditModal(true)
-    //console.log(userId)
 
   return (
     <>
@@ -16,12 +15,12 @@ function EditUserButton({ userId, username, password, setChecker }) {
         showEditModal 
         && 
         <EditModal 
-          setShowEditModal={setShowEditModal} 
-          userId={userId}
-          username={username}
-          password={password}
-          setSuccessEdit={setSuccessEdit}
-        /> 
+          setShowEditModal={setShowEditModal}
+          itemId={itemId}
+          itemName={itemName}
+          itemDesc={itemDesc}
+          itemPrice={itemPrice}
+          setSuccessEdit={setSuccessEdit} /> 
       }
       { successEdit && <SuccessEdit setSuccessEdit={setSuccessEdit} setChecker={setChecker} /> }
       <button onClick={handleClick} className='p-3 bg-violet-400 rounded-md mr-1'>
@@ -33,17 +32,25 @@ function EditUserButton({ userId, username, password, setChecker }) {
   )
 }
 
-function EditModal({ setShowEditModal, userId, username, password, setSuccessEdit }) {
+function EditModal({ setShowEditModal, itemId, itemName, itemDesc, itemPrice, setSuccessEdit }) {
 
-  const [newUsername, setNewUsername] = useState(username)
-  const [newPassword, setNewPassword] = useState(password)
+  const [newItemName, setNewItemName] = useState(itemName)
+  const [newItemDesc, setNewItemDesc] = useState(itemDesc)
+  const [newItemPrice, setNewItemPrice] = useState(itemPrice)
 
   const handleEditSubmit = async (e) => {
     e.preventDefault()
+    // console.log(newItemName)
+    // console.log(newItemDesc)
+    // console.log(newItemPrice)
     const { error } = await supabase
-    .from('user_account')
-    .update({ user_password: newPassword, user_name: newUsername })
-    .eq('user_id', userId)
+    .from('items')
+    .update({ 
+        item_name: newItemName, 
+        item_desc: newItemDesc, 
+        item_price: newItemPrice 
+      })
+    .eq('item_id', itemId)
     error && console.error(error)
     setSuccessEdit(true)
     setShowEditModal(false)
@@ -58,25 +65,38 @@ function EditModal({ setShowEditModal, userId, username, password, setSuccessEdi
             className='absolute top-4 right-5 text-3xl p-1 rounded-full hover:bg-gray-400 duration-150'>
               <AiOutlineCloseCircle />
           </button>
-          <h1 className='text-violet-400 font-bold text-2xl'>Edit User</h1>
-          <form className='flex flex-col gap-3 p-3' onSubmit={handleEditSubmit}>
+          <h1 className='text-violet-400 font-bold text-2xl'>Edit Item</h1>
+          <form className='flex flex-col gap-3 py-3 px-14' onSubmit={handleEditSubmit}>
             <div className='flex flex-col'>
-              <label htmlFor="username" className='text-lg font-semibold'>Username:</label>
+              <label htmlFor="taskTitle" className='text-lg font-semibold text-center'>Item Name:</label>
               <input 
-                placeholder={username}
-                value={newUsername}
-                onChange={e => setNewUsername(e.target.value)}
+                placeholder={itemName}
+                value={newItemName}
+                onChange={e => setNewItemName(e.target.value)}
                 className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
-                id='username' type="text" />
+                id='taskTitle' type="text" />
             </div>
             <div className='flex flex-col'>
-              <label htmlFor="password" className='text-lg font-semibold'>Password:</label>
+              <label htmlFor="taskDesc" className='text-lg font-semibold text-center'>Item Description:</label>
+              <textarea 
+                className='rounded-md p-1 text-center outline-none border-2 focus:border-gray-400 duration-150'
+                name="taskDesc" 
+                id="taskDesc" 
+                cols="23" 
+                rows="5"
+                placeholder={itemDesc}
+                value={newItemDesc}
+                onChange={e => setNewItemDesc(e.target.value)} >
+              </textarea>
+            </div>
+            <div className='flex flex-col'>
+              <label htmlFor="coinQuantity" className='text-lg font-semibold text-center'>Item Price:</label>
               <input
-                placeholder={password}
-                value={newPassword}
-                onChange={e => setNewPassword(e.target.value)}
+                placeholder={itemPrice}
+                //value={newCoinQuantity}
+                onChange={e => setNewItemPrice(e.target.value)}
                 className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
-                id='password' type="password" />
+                id='coinQuantity' type="number" />
             </div>
             <input
               className='p-1 bg-green-400 text-white font-semibold text-lg rounded-md cursor-pointer hover:bg-green-500 duration-150' 
@@ -109,4 +129,4 @@ function SuccessEdit({ setSuccessEdit, setChecker }) {
   )
 }
 
-export default EditUserButton
+export default EditItem

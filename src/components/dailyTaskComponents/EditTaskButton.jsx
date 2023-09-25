@@ -34,9 +34,9 @@ function EditTaskButton({ taskId, taskTitle, taskDesc, coinQuantity, setChecker 
 
 function EditModal({ setShowEditModal, taskId, taskTitle, taskDesc, coinQuantity, setSuccessEdit }) {
 
-  const [newTaskTitle, setNewTaskTitle] = useState('')
-  const [newTaskDesc, setNewTaskDesc] = useState('')
-  const [newCoinQuantity, setNewCointQuantity] = useState(0)
+  const [newTaskTitle, setNewTaskTitle] = useState(taskTitle)
+  const [newTaskDesc, setNewTaskDesc] = useState(taskDesc)
+  const [newCoinQuantity, setNewCointQuantity] = useState(coinQuantity)
 
   const handleEditSubmit = async (e) => {
     e.preventDefault()
@@ -70,7 +70,7 @@ function EditModal({ setShowEditModal, taskId, taskTitle, taskDesc, coinQuantity
                 value={newTaskTitle}
                 onChange={e => setNewTaskTitle(e.target.value)}
                 className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
-                id='taskTitle' type="text" required />
+                id='taskTitle' type="text" />
             </div>
             <div className='flex flex-col'>
               <label htmlFor="taskDesc" className='text-lg font-semibold text-center'>Task Description:</label>
@@ -82,8 +82,7 @@ function EditModal({ setShowEditModal, taskId, taskTitle, taskDesc, coinQuantity
                 rows="5"
                 placeholder={taskDesc}
                 value={newTaskDesc}
-                onChange={e =>setNewTaskDesc(e.target.value)}
-                required >
+                onChange={e =>setNewTaskDesc(e.target.value)} >
               </textarea>
             </div>
             <div className='flex flex-col'>
@@ -93,7 +92,7 @@ function EditModal({ setShowEditModal, taskId, taskTitle, taskDesc, coinQuantity
                 //value={newCoinQuantity}
                 onChange={e => setNewCointQuantity(e.target.value)}
                 className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
-                id='coinQuantity' type="number" required />
+                id='coinQuantity' type="number" />
             </div>
             <input
               className='p-1 bg-green-400 text-white font-semibold text-lg rounded-md cursor-pointer hover:bg-green-500 duration-150' 

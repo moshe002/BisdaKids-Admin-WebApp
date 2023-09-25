@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import TopNavbarButton from './TopNavbarButton'
 import Logo from '../assets/logo.png'
+import Logout from './Logout'
 
 function TopNavbar() {
   return (
@@ -25,6 +26,7 @@ function TopNavbar() {
             <TopNavbarButton text={'Sale'} />
           </Link>
         </div>
+        <Logout />
     </div>
   )
 }
