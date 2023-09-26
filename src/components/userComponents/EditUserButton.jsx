@@ -58,7 +58,7 @@ function EditModal({ setShowEditModal, userId, username, password, setSuccessEdi
             className='absolute top-4 right-5 text-3xl p-1 rounded-full hover:bg-gray-400 duration-150'>
               <AiOutlineCloseCircle />
           </button>
-          <h1 className='text-violet-400 font-bold text-2xl'>Edit User</h1>
+          <h1 className='text-blue-500 font-bold text-2xl'>Edit Player</h1>
           <form className='flex flex-col gap-3 p-3' onSubmit={handleEditSubmit}>
             <div className='flex flex-col'>
               <label htmlFor="username" className='text-lg font-semibold'>Username:</label>

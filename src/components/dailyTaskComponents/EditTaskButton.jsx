@@ -61,7 +61,7 @@ function EditModal({ setShowEditModal, taskId, taskTitle, taskDesc, coinQuantity
             className='absolute top-4 right-5 text-3xl p-1 rounded-full hover:bg-gray-400 duration-150'>
               <AiOutlineCloseCircle />
           </button>
-          <h1 className='text-violet-400 font-bold text-2xl'>Edit Daily Tasks</h1>
+          <h1 className='text-orange-400 font-bold text-2xl'>Edit Daily Tasks</h1>
           <form className='flex flex-col gap-3 py-3 px-14' onSubmit={handleEditSubmit}>
             <div className='flex flex-col'>
               <label htmlFor="taskTitle" className='text-lg font-semibold text-center'>Task Title:</label>

@@ -65,23 +65,23 @@ function EditModal({ setShowEditModal, itemId, itemName, itemDesc, itemPrice, se
             className='absolute top-4 right-5 text-3xl p-1 rounded-full hover:bg-gray-400 duration-150'>
               <AiOutlineCloseCircle />
           </button>
-          <h1 className='text-violet-400 font-bold text-2xl'>Edit Item</h1>
+          <h1 className='text-green-500 font-bold text-2xl'>Edit Item</h1>
           <form className='flex flex-col gap-3 py-3 px-14' onSubmit={handleEditSubmit}>
             <div className='flex flex-col'>
-              <label htmlFor="taskTitle" className='text-lg font-semibold text-center'>Item Name:</label>
+              <label htmlFor="itemName" className='text-lg font-semibold text-center'>Item Name:</label>
               <input 
                 placeholder={itemName}
                 value={newItemName}
                 onChange={e => setNewItemName(e.target.value)}
                 className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
-                id='taskTitle' type="text" />
+                id='itemName' type="text" />
             </div>
             <div className='flex flex-col'>
-              <label htmlFor="taskDesc" className='text-lg font-semibold text-center'>Item Description:</label>
+              <label htmlFor="itemDesc" className='text-lg font-semibold text-center'>Item Description:</label>
               <textarea 
                 className='rounded-md p-1 text-center outline-none border-2 focus:border-gray-400 duration-150'
-                name="taskDesc" 
-                id="taskDesc" 
+                name="itemDesc" 
+                id="itemDesc" 
                 cols="23" 
                 rows="5"
                 placeholder={itemDesc}
@@ -90,13 +90,13 @@ function EditModal({ setShowEditModal, itemId, itemName, itemDesc, itemPrice, se
               </textarea>
             </div>
             <div className='flex flex-col'>
-              <label htmlFor="coinQuantity" className='text-lg font-semibold text-center'>Item Price:</label>
+              <label htmlFor="itemPrice" className='text-lg font-semibold text-center'>Item Price:</label>
               <input
                 placeholder={itemPrice}
                 //value={newCoinQuantity}
                 onChange={e => setNewItemPrice(e.target.value)}
                 className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
-                id='coinQuantity' type="number" />
+                id='itemPrice' type="number" />
             </div>
             <input
               className='p-1 bg-green-400 text-white font-semibold text-lg rounded-md cursor-pointer hover:bg-green-500 duration-150' 
