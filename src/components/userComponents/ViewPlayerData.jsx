@@ -75,23 +75,20 @@ function Users() {
             <table className='table-auto'>
                 <tbody>
                     <tr className=''>
-                        <th></th>
                         <th className='p-3 border-2'>User ID</th>
                         <th className='p-3 border-2'>Username</th>
                         <th className='p-3 border-2'>User Password</th>
-                        <th></th>
+                        <th className='p-3 border-2'>Action</th>
                     </tr>
                     {
                         userData.map((data, index) => {
                             return(
                                 <tr className='text-center' key={index}>
-                                    <td>
-                                      <EditUserButton setChecker={setChecker} userId={data.user_id} username={data.user_name} password={data.user_password} />
-                                    </td>
                                     <td className='p-3 border-2'>{data.user_id}</td>
                                     <td className='p-3 border-2'>{data.user_name}</td>
                                     <td className='p-3 border-2'>{data.user_password}</td>
                                     <td>
+                                      <EditUserButton setChecker={setChecker} userId={data.user_id} username={data.user_name} password={data.user_password} />
                                       <DeleteUserButton userId={data.user_id} setChecker={setChecker} />
                                     </td>
                                 </tr>

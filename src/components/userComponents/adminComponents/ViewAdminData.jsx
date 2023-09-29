@@ -47,19 +47,23 @@ function ViewAdminData() {
         <table className='table-auto'>
           <tbody>
             <tr>
-              <th></th>
               <th className='p-3 border-2'>Firstname</th>
               <th className='p-3 border-2'>Lastname</th>
               <th className='p-3 border-2'>Username</th>
               <th className='p-3 border-2'>Email</th>
               <th className='p-3 border-2'>Contact No.</th>
-              <th></th>
+              <th className='p-3 border-2'>Action</th>
             </tr>
             {
               adminData.map((data, key) => {
                 return(
                   <tr key={key}>
-                    <td>
+                    <td className='p-3 border-2'>{data.firstname}</td>
+                    <td className='p-3 border-2'>{data.lastname}</td>
+                    <td className='p-3 border-2'>{data.username}</td>
+                    <td className='p-3 border-2'>{data.email}</td>
+                    <td className='p-3 border-2'>{data.contactNo}</td>
+                    <td>                   
                       <EditAdmin
                         setChecker={setChecker}
                         userId={data.id}
@@ -67,14 +71,7 @@ function ViewAdminData() {
                         lastname={data.lastname}
                         username={data.username}
                         email={data.email}
-                        contactNo={data.contactNo} />
-                    </td>
-                    <td className='p-3 border-2'>{data.firstname}</td>
-                    <td className='p-3 border-2'>{data.lastname}</td>
-                    <td className='p-3 border-2'>{data.username}</td>
-                    <td className='p-3 border-2'>{data.email}</td>
-                    <td className='p-3 border-2'>{data.contactNo}</td>
-                    <td>
+                        contactNo={data.contactNo} />                   
                       <DeleteAdmin userId={data.id} adminUsername={data.username} setChecker={setChecker} />
                     </td>
                   </tr>
