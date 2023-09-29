@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+// import axios from 'axios'
+import { supabase } from '../supabase-config'
  
 import Logo from '../assets/logo.png'
 
@@ -11,25 +12,65 @@ function Login() {
     const [loginData, setLoginData] = useState({})
     const [errorMessage, setErrorMessage] = useState('')
     const [displayError, setDisplayError] = useState(false)
+    const [displayLoading, setDisplayLoading] = useState(false)
+    const [loading, setLoading] = useState('')
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault()
-        validateInputs()
+        await fetchData()
     }
 
-    const validateInputs = async () => {
-        try {
-            const res = await axios.post('http://localhost/BisdaKids-Admin/backend/login-config.php', loginData)
-            setErrorMessage(res.data.message)
-            if(res.data.message === "Invalid password!" || res.data.message === "User not found!") {
-                setDisplayError(true)
-            } else {
-                setDisplayError(false)
-                //console.log('logged in')
-                navigate('/users')
-            }
-        } catch(error) {
-            console.error(error)
+    /* local connection to php file 
+    // const res = await axios.post('http://localhost/BisdaKids-Admin/backend/login-config.php', loginData)
+    // setErrorMessage(res.data.message)
+    // if(res.data.message === "Invalid password!" || res.data.message === "User not found!") {
+    //     setDisplayError(true)
+    // } else {
+    //     setDisplayError(false)
+    //     //console.log('logged in')
+    //     navigate('/users')
+    // } */
+
+    const fetchData = async () => {
+        let emailExist = ''
+        let passwordExist = ''
+        // checks email
+        const { data, error } = await supabase
+        .from('admin_accounts')
+        .select()
+        .eq('email', `${loginData.loginfo}`)
+
+        if(data){
+            emailExist = data.length.toString()
+            //console.log(emailExist)
+        }
+        error && console.error(error)
+
+        // checks password
+        const { data:passwordData, error:passwordError } = await supabase
+        .from('admin_accounts')
+        .select()
+        .eq('password', `${loginData.password}`)
+
+        if(passwordData){
+            passwordExist = passwordData.length.toString()
+            //console.log(passwordExist) 
+        }
+        passwordError && console.log(passwordError)
+
+        if(emailExist == '0' && passwordExist == '0'){
+            setDisplayError(true)
+            setErrorMessage('Account does not exist')
+        } else if (emailExist == '1' && passwordExist == '0') {
+            setDisplayError(true)
+            setErrorMessage('Password does not exist')
+        } else if (emailExist == '0' && passwordExist == '1') {
+            setDisplayError(true)
+            setErrorMessage('Email does not exist')
+        } else {
+            setDisplayLoading(true)
+            setLoading('Loading...')
+            navigate('/users')
         }
     }
 
@@ -70,12 +111,13 @@ function Login() {
                         {errorMessage}
                     </h1> 
                 }
+                { displayLoading && <h1 className='text-gray-400 text-xl font-bold'>{loading}</h1> }
                 <form className="flex flex-col relative gap-5" onSubmit={handleLogin}>
                     <input
                         className="bg-gray-200 p-3 rounded-md placeholder-black w-80 focus:outline-blue-500"
                         type="text" 
                         id="loginfo" 
-                        placeholder="Enter email or username" 
+                        placeholder="Enter email" 
                         name="loginfo"
                         onChange={handleInputs} 
                         required />

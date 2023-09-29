@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { AiFillDelete, AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
-import axios from 'axios'
+//import axios from 'axios'
+import { supabase } from '../../../supabase-config'
 
 function DeleteAdmin({ adminUsername, userId, setChecker }) {
 
@@ -16,9 +17,9 @@ function DeleteAdmin({ adminUsername, userId, setChecker }) {
           userId={userId}
           adminUsername={adminUsername} 
           setShowModal={setShowModal}
-          setDoneDelete={setDoneDelete}
-          setChecker={setChecker} /> }
-      { doneDelete && <DoneDelete setDoneDelete={setDoneDelete} /> }
+          setDoneDelete={setDoneDelete} /> 
+      }
+      { doneDelete && <DoneDelete setChecker={setChecker} setDoneDelete={setDoneDelete} /> }
       <button title='delete admin' onClick={() => setShowModal(true)} className='p-3 bg-red-400 rounded-md ml-1'>
         <p className='text-xl'>
           <AiFillDelete />
@@ -28,16 +29,20 @@ function DeleteAdmin({ adminUsername, userId, setChecker }) {
   )
 }
 
-function DeleteAdminModal({ userId, adminUsername, setShowModal, setDoneDelete, setChecker }) {
+function DeleteAdminModal({ userId, adminUsername, setShowModal, setDoneDelete }) {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.post(`http://localhost/BisdaKids-Admin/backend/deleteAdmin.php`, userId)
-      console.log(response.data)
+      // const response = await axios.post(`http://localhost/BisdaKids-Admin/backend/deleteAdmin.php`, userId)
+      // console.log(response.data)
+      const { error } = await supabase
+      .from('admin_accounts')
+      .delete()
+      .eq('id', userId)
+      error && console.error(error)
     } catch(error) {
       console.error(error)
     }
-    setChecker(true)
     setDoneDelete(true)
     setShowModal(false)
   }
@@ -63,9 +68,10 @@ function DeleteAdminModal({ userId, adminUsername, setShowModal, setDoneDelete, 
   )
 }
 
-function DoneDelete({ setDoneDelete }) {
+function DoneDelete({ setDoneDelete, setChecker }) {
 
   const handleClick = () => {
+    setChecker(true)
     setDoneDelete(false)
   }
 

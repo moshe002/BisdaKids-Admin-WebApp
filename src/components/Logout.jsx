@@ -1,6 +1,6 @@
 import React from 'react'
 import { AiOutlineLogout } from 'react-icons/ai'
-import axios from 'axios'
+//import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
 function Logout() {
@@ -9,18 +9,19 @@ function Logout() {
 
     const handleLogout = async () => {
         try {
+            nav('/')
             // Make an API request to your backend to log the user out
-            const response = await axios.post('http://localhost/BisdaKids-Admin/backend/logout-config.php');
+            // const response = await axios.post('http://localhost/BisdaKids-Admin/backend/logout-config.php');
       
-            if (response.data.status === 1) {
-              // Logout successful
-              // Clear user-related data and navigate to the login page or perform other actions as needed
-              console.log('Logout successful');
-              nav('/')
-            } else {
-              // Logout failed
-              console.error('Logout failed');
-            }
+            // if (response.data.status === 1) {
+            //   // Logout successful
+            //   // Clear user-related data and navigate to the login page or perform other actions as needed
+            //   console.log('Logout successful');
+            //   nav('/')
+            // } else {
+            //   // Logout failed
+            //   console.error('Logout failed');
+            // }
           } catch (error) {
             console.error('Error:', error);
           }

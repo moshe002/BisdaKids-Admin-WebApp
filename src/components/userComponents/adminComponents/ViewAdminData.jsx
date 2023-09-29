@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+//import axios from 'axios'
+import { supabase } from '../../../supabase-config'
 
 import Loading from '../../Loading'
 import DeleteAdmin from './DeleteAdmin'
@@ -16,17 +17,26 @@ function ViewAdminData() {
   }, [checker])
 
   const fetchAdminData = async () => {
-    setLoading(true)
-    await axios.get('http://localhost/BisdaKids-Admin/backend/getAdminData.php')
-    .then((response) => {
-        //console.log(response.data.data)
-        setAdminData(response.data.data);
-    })
-    .catch((error) => {
-        console.error('Error fetching user data:', error);
-    });
+    const { data, error } = await supabase
+    .from('admin_accounts')
+    .select()
+    if(data){
+      setAdminData(data)
+    }
+    error && console.error(error)
     setLoading(false)
     setChecker(false)
+    // setLoading(true)
+    // await axios.get('http://localhost/BisdaKids-Admin/backend/getAdminData.php')
+    // .then((response) => {
+    //     //console.log(response.data.data)
+    //     setAdminData(response.data.data);
+    // })
+    // .catch((error) => {
+    //     console.error('Error fetching user data:', error);
+    // });
+    // setLoading(false)
+    // setChecker(false)
   }
 
   return (
@@ -52,20 +62,20 @@ function ViewAdminData() {
                     <td>
                       <EditAdmin
                         setChecker={setChecker}
-                        userId={data.userID}
-                        firstname={data.fName}
-                        lastname={data.lName}
-                        username={data.userName}
-                        email={data.userEmail}
+                        userId={data.id}
+                        firstname={data.firstname}
+                        lastname={data.lastname}
+                        username={data.username}
+                        email={data.email}
                         contactNo={data.contactNo} />
                     </td>
-                    <td className='p-3 border-2'>{data.fName}</td>
-                    <td className='p-3 border-2'>{data.lName}</td>
-                    <td className='p-3 border-2'>{data.userName}</td>
-                    <td className='p-3 border-2'>{data.userEmail}</td>
+                    <td className='p-3 border-2'>{data.firstname}</td>
+                    <td className='p-3 border-2'>{data.lastname}</td>
+                    <td className='p-3 border-2'>{data.username}</td>
+                    <td className='p-3 border-2'>{data.email}</td>
                     <td className='p-3 border-2'>{data.contactNo}</td>
                     <td>
-                      <DeleteAdmin userId={data.userID} adminUsername={data.userName} setChecker={setChecker} />
+                      <DeleteAdmin userId={data.id} adminUsername={data.username} setChecker={setChecker} />
                     </td>
                   </tr>
                 )

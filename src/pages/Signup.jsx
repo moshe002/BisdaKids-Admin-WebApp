@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+//import axios from 'axios' // used for local database
+import { supabase } from '../supabase-config'
 
 import Logo from '../assets/logo.png'
 import SuccessSignup from '../components/SuccessSignup'
@@ -11,13 +12,39 @@ function Signup() {
 
     const [signupData, setSignupData] = useState({})
     const [showSignup, setShowSignup] = useState(false)
+    const [displayError, setDisplayError] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
 
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault()
+        /*local xampp and sql code
         axios.post('http://localhost/BisdaKids-Admin/backend/signup-config.php', signupData)
         .then((response) => {
-            response && setShowSignup(true)
-        })
+        response && setShowSignup(true)
+        }) */
+        if(signupData.confirmpass != signupData.pass){
+            setDisplayError(true)
+            setErrorMessage('Passwords are not the same')
+        } else {
+            setDisplayError(false)
+            setErrorMessage('')
+            //console.log('passwords are the same')
+            const { error } = await supabase
+            .from('admin_accounts')
+            .insert({ 
+                firstname: signupData.firstname,
+                lastname: signupData.lastname,
+                username: signupData.username,
+                email: signupData.email,
+                contactNo: signupData.contact,
+                password: signupData.pass
+             })
+            if(error) {
+                setDisplayError(true)
+                setErrorMessage(error)
+            }
+            setShowSignup(true)
+        }
         //console.log(signupData)
     }
 
@@ -52,6 +79,7 @@ function Signup() {
             </div>
             <div className="flex flex-col justify-center p-3 gap-7">
                 <h1 className="font-semibold text-2xl">Sign Up</h1>
+                { displayError && <h1 className='font-semibold text-xl text-red-500'>{errorMessage}</h1> }
                 <form className="flex flex-col gap-5 mb-5" onSubmit={handleSignup}>
                     <div className="flex flex-row justify-center gap-7">
                         <input 

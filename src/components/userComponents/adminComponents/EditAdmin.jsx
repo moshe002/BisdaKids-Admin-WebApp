@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai' 
-import axios from 'axios'
+//import axios from 'axios'
+import { supabase } from '../../../supabase-config'
 
 function EditAdmin({ 
   firstname,
@@ -70,9 +71,20 @@ function EditModal({
 
   const handleEditSubmit = async (e) => {
     e.preventDefault()
-    try{
-      const res = await axios.post(`http://localhost/BisdaKids-Admin/backend/editAdmin.php`, dataEdit)
-      console.log(res.data)
+    try{ 
+      const { error } = await supabase
+      .from('admin_accounts')
+      .update({ 
+        firstname: newFirstname,
+        lastname: newLastname,
+        username: newUsername,
+        email: newEmail,
+        contactNo: newContactNo, 
+      })
+      .eq('id', userId)
+      error && console.error(error)
+      // const res = await axios.post(`http://localhost/BisdaKids-Admin/backend/editAdmin.php`, dataEdit)
+      // console.log(res.data)
     } catch(error) {
       console.error(error)
     }
