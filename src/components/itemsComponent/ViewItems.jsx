@@ -10,9 +10,7 @@ function ViewItems({ checker, setChecker }) {
     const [loading, setLoading] = useState(false)
     const [itemsData, setItemsData] = useState([])
 
-    useEffect(() => {
-        fetchItems()
-    }, [checker])
+    useEffect(() => { fetchItems()}, [checker])
 
     const fetchItems = async () => {
         setLoading(true)
@@ -41,17 +39,20 @@ function ViewItems({ checker, setChecker }) {
                     <table className='table-auto'>
                         <tbody>
                         <tr>
-                            <th></th>
                             <th className='p-3 border-2'>Item ID</th>
                             <th className='p-3 border-2'>Item Name</th>
                             <th className='p-3 border-2'>Item Description</th>
                             <th className='p-3 border-2'>Item Price</th>
-                            <th></th>
+                            <th className='p-3 border-2'>Action</th>
                         </tr>
                         {
                             itemsData.map((data, index) => {
                                 return(
                                     <tr key={index}>
+                                        <td className='p-3 border-2'>{data.item_id}</td>
+                                        <td className='p-3 border-2'>{data.item_name}</td>
+                                        <td className='p-3 border-2'>{data.item_desc}</td>
+                                        <td className='p-3 border-2'>{data.item_price}</td>
                                         <td>
                                             <EditItem 
                                                 itemId={data.item_id}
@@ -59,12 +60,6 @@ function ViewItems({ checker, setChecker }) {
                                                 itemDesc={data.item_desc}
                                                 itemPrice={data.item_price} 
                                                 setChecker={setChecker} />
-                                        </td>
-                                        <td className='p-3 border-2'>{data.item_id}</td>
-                                        <td className='p-3 border-2'>{data.item_name}</td>
-                                        <td className='p-3 border-2'>{data.item_desc}</td>
-                                        <td className='p-3 border-2'>{data.item_price}</td>
-                                        <td>
                                             <DeleteItem itemId={data.item_id} setChecker={setChecker} />
                                         </td>
                                     </tr>
