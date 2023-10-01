@@ -89,7 +89,7 @@ function Users() {
                                     <td className='p-3 border-2'>{data.user_password}</td>
                                     <td>
                                       <EditUserButton setChecker={setChecker} userId={data.user_id} username={data.user_name} password={data.user_password} />
-                                      <DeleteUserButton userId={data.user_id} setChecker={setChecker} />
+                                      <DeleteUserButton username={data.user_name} userId={data.user_id} setChecker={setChecker} />
                                     </td>
                                 </tr>
                             )

@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 // import axios from 'axios'
 import { supabase } from '../supabase-config'
- 
+
 import Logo from '../assets/logo.png'
 
-function Login() {
+function Login({ setIsLoggedIn }) {
 
     const navigate = useNavigate()
 
@@ -15,9 +15,9 @@ function Login() {
     const [displayLoading, setDisplayLoading] = useState(false)
     const [loading, setLoading] = useState('')
 
-    const handleLogin = async (e) => {
+    const handleLogin = (e) => {
         e.preventDefault()
-        await fetchData()
+        fetchData()
     }
 
     /* local connection to php file 
@@ -70,7 +70,8 @@ function Login() {
         } else {
             setDisplayLoading(true)
             setLoading('Loading...')
-            navigate('/users')
+            setIsLoggedIn(true)
+            navigate('/users') 
         }
     }
 
@@ -115,7 +116,7 @@ function Login() {
                 <form className="flex flex-col relative gap-5" onSubmit={handleLogin}>
                     <input
                         className="bg-gray-200 p-3 rounded-md placeholder-black w-80 focus:outline-blue-500"
-                        type="text" 
+                        type="email" 
                         id="loginfo" 
                         placeholder="Enter email" 
                         name="loginfo"

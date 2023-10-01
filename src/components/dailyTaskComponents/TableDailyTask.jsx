@@ -40,7 +40,6 @@ function TableDailyTask({ checker, setChecker }) {
                     <table className='table-auto'>
                         <tbody>
                         <tr>
-                            <th></th>
                             <th className='p-3 border-2'>Task Title</th>
                             <th className='p-3 border-2'>Task Description</th>
                             <th className='p-3 border-2'>Coin Quantity</th>
@@ -50,19 +49,19 @@ function TableDailyTask({ checker, setChecker }) {
                             dailyTask.map((data, index) => {
                                 return(
                                     <tr key={index}>
-                                        <td>
-                                            <EditTaskButton 
-                                                setChecker={setChecker}
-                                                taskId={data.task_id} 
-                                                taskTitle={data.task_title}
-                                                taskDesc={data.task_desc}
-                                                coinQuantity={data.coin_quantity} />
-                                        </td>
                                         <td className='p-3 border-2'>{data.task_title}</td>
                                         <td className='p-3 border-2'>{data.task_desc}</td>
                                         <td className='p-3 border-2'>{data.coin_quantity}</td>
                                         <td>
-                                            <DeleteTaskButton taskId={data.task_id} setChecker={setChecker} />
+                                            <div className='p-2'>
+                                                <EditTaskButton 
+                                                    setChecker={setChecker}
+                                                    taskId={data.task_id} 
+                                                    taskTitle={data.task_title}
+                                                    taskDesc={data.task_desc}
+                                                    coinQuantity={data.coin_quantity} />
+                                                <DeleteTaskButton taskTitle={data.task_title} taskId={data.task_id} setChecker={setChecker} />
+                                            </div>
                                         </td>
                                     </tr>
                                 )

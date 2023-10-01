@@ -3,13 +3,14 @@ import { AiOutlineLogout } from 'react-icons/ai'
 //import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 
-function Logout() {
+function Logout({ setIsLoggedIn }) {
 
     const nav = useNavigate()
 
-    const handleLogout = async () => {
+    const handleLogout = () => {
         try {
-            nav('/')
+          setIsLoggedIn(false)
+          nav('/') 
             // Make an API request to your backend to log the user out
             // const response = await axios.post('http://localhost/BisdaKids-Admin/backend/logout-config.php');
       

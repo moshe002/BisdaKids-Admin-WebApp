@@ -3,7 +3,7 @@ import { AiFillDelete, AiOutlineCloseCircle } from 'react-icons/ai'
 
 import ValidateDelete from './ValidateDelete'
 
-function DeleteUserButton({ userId, setChecker }) {
+function DeleteUserButton({ userId, setChecker, username }) {
 
   const [deleteUser, setDeleteUser] = useState(false)
   const [successDelete, setSuccessDelete] = useState(false)
@@ -15,7 +15,7 @@ function DeleteUserButton({ userId, setChecker }) {
 
   return (
     <>
-      { deleteUser && <ValidateDelete userId={userId} setSuccessDelete={setSuccessDelete} setDeleteUser={setDeleteUser} /> }
+      { deleteUser && <ValidateDelete username={username} userId={userId} setSuccessDelete={setSuccessDelete} setDeleteUser={setDeleteUser} /> }
       { successDelete && <SuccessDelete setSuccessDelete={setSuccessDelete} setChecker={setChecker} /> }
       <button onClick={handleDelete} className='p-3 bg-red-400 rounded-md ml-1'>
           <p className='text-xl'>

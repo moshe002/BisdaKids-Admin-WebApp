@@ -5,7 +5,7 @@ import TopNavbarButton from './TopNavbarButton'
 import Logo from '../assets/logo.png'
 import Logout from './Logout'
 
-function TopNavbar() {
+function TopNavbar({ setIsLoggedIn }) {
   return (
     <div className='flex flex-row items-center justify-between p-3 shadow-xl'>
         <img className='w-38 h-16' src={Logo} alt="logo_image" />
@@ -26,7 +26,7 @@ function TopNavbar() {
             <TopNavbarButton text={'Sale'} />
           </Link>
         </div>
-        <Logout />
+        <Logout setIsLoggedIn={setIsLoggedIn} />
     </div>
   )
 }

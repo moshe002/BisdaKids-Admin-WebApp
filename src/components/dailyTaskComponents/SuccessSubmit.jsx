@@ -1,7 +1,7 @@
 import React from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
-function SuccessSubmit({ setSuccessSubmit, setChecker }) {
+function SuccessSubmit({ setSuccessSubmit, setChecker, setAddTask }) {
 
   const handleClick = () => {
     setChecker(true)
