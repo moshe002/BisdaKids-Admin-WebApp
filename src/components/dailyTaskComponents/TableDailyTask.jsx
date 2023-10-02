@@ -43,7 +43,7 @@ function TableDailyTask({ checker, setChecker }) {
                             <th className='p-3 border-2'>Task Title</th>
                             <th className='p-3 border-2'>Task Description</th>
                             <th className='p-3 border-2'>Coin Quantity</th>
-                            <th></th>
+                            <th className='p-3 border-2'>Action</th>
                         </tr>
                         {
                             dailyTask.map((data, index) => {

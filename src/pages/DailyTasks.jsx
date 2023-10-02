@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { supabase } from '../supabase-config'
-import { GrAddCircle } from 'react-icons/gr'
+import Button from '@mui/material/Button';
 
 import AddDailyTask from '../components/dailyTaskComponents/AddDailyTask'
 import SuccessSubmit from '../components/dailyTaskComponents/SuccessSubmit'
@@ -41,16 +41,8 @@ function DailyTasks() {
   }
 
   return (
-    <div className='flex flex-col items-center py-5'>
+    <div className='flex flex-col items-center py-5 gap-3'>
       { successSubmit && <SuccessSubmit setAddTask={setAddTask} setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
-      <div className='flex flex-row items-center gap-3'>
-        <h1 className='text-2xl text-center font-bold text-orange-400'>Add Daily Tasks</h1>
-        <button onClick={handleAddTask} title='Add task' className='bg-green-300 hover:bg-green-500 p-1 rounded-full duration-150'>
-          <p className='text-2xl'>
-            <GrAddCircle />
-          </p>
-        </button>
-      </div>
       {
         addTask
         &&
@@ -65,6 +57,9 @@ function DailyTasks() {
           setAddTask={setAddTask} />
       }
       <ViewDailyTask checker={checker} setChecker={setChecker} />
+      <div className='flex flex-row items-center gap-3'>
+       <Button onClick={handleAddTask} title='Add task' variant='contained'>Add Daily Task</Button>
+      </div>
     </div>
   )
 }

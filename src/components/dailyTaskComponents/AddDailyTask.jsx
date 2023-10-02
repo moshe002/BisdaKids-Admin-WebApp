@@ -1,6 +1,7 @@
 import React from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
+
 function AddDailyTask({ 
     handleSentTask,
     taskTitle,
@@ -19,7 +20,7 @@ function AddDailyTask({
                 type='button' 
                 className='absolute top-4 right-5 text-3xl p-1 rounded-full hover:bg-gray-400 duration-150'>
                 <AiOutlineCloseCircle />
-            </button>
+            </button> 
             <form onSubmit={handleSentTask} className='flex flex-col items-center p-5 gap-5'>
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="taskTitle">Task Title</label>

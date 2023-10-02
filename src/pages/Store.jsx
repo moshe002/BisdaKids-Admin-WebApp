@@ -58,7 +58,7 @@ function Store() {
 
   return (
     <>
-    <div className='flex flex-col items-center gap-5'>
+    <div className='flex flex-col items-center gap-3'>
       {successModal && <SuccessSubmit setSuccessModal={setSuccessModal} /> }
       <div className='flex justify-center items-center gap-14 mt-10'>
         <button
