@@ -72,7 +72,9 @@ function Store() {
             System Store
         </button>
       </div>
-      { renderThis ? <ViewGameStoreData checker={checker} setChecker={setChecker} /> : <ViewSystemStoreData />}
+      { renderThis ? (
+      <>
+      <ViewGameStoreData checker={checker} setChecker={setChecker} /> 
       <Button onClick={handleOpen} variant='contained'>Add</Button>
       <Modal
         open={open}
@@ -145,6 +147,9 @@ function Store() {
           </Typography>
         </Box>
       </Modal>
+      </>
+      )  
+      : <ViewSystemStoreData  checker={checker} setChecker={setChecker}/>}
     </div>
     
     </>
