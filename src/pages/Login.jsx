@@ -71,6 +71,7 @@ function Login({ setIsLoggedIn }) {
             setDisplayLoading(true)
             setLoading('Loading...')
             setIsLoggedIn(true)
+            localStorage.setItem('isLoggedIn', 'true');
             navigate('/users') 
         }
     }

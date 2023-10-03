@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from 'react-router-dom'; 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 // pages
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
@@ -19,6 +19,14 @@ function Router() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const location = useLocation();
+
+  useEffect(() => {
+    // Check if the user is logged in when the component mounts
+    const storedLoggedInStatus = localStorage.getItem('isLoggedIn');
+    if (storedLoggedInStatus === 'true') {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const navbarRoutes = [
     '/users', 

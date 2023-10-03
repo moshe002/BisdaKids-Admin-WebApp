@@ -10,6 +10,7 @@ function Logout({ setIsLoggedIn }) {
     const handleLogout = () => {
         try {
           setIsLoggedIn(false)
+          localStorage.removeItem('isLoggedIn');
           nav('/') 
             // Make an API request to your backend to log the user out
             // const response = await axios.post('http://localhost/BisdaKids-Admin/backend/logout-config.php');
