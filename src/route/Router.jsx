@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Users from '../pages/Users';
+import AccountProgress from '../pages/AccountProgress';
 import Store from '../pages/Store'
 import DailyTasks from '../pages/DailyTasks'
 import SaleTransac from '../pages/SaleTransac';
@@ -30,6 +31,7 @@ function Router() {
 
   const navbarRoutes = [
     '/users', 
+    '/accountprogress',
     '/store', 
     '/dailytasks', 
     '/saletransac', 
@@ -57,6 +59,7 @@ function Router() {
           &&
           <>
             <Route path='/users' element={<Users />} />
+            <Route path='/accountprogress' element={<AccountProgress />} />
             <Route path='/store' element={<Store />} />
             <Route path='/dailytasks' element={<DailyTasks />} />
             <Route path='/saletransac' element={<SaleTransac />} />

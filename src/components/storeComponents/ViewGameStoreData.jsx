@@ -8,6 +8,7 @@ import EditGameStoreData from './EditGameStoreData'
 function ViewGameStoreData() {
 
     const [gameStoreData, setGameStoreData] = useState([])
+    const [itemName, setItemName] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [checker, setChecker] = useState(false)
 
@@ -27,7 +28,24 @@ function ViewGameStoreData() {
       setGameStoreData(data)
     }
     error && console.log(error)
+    await fetchItemName()
     setIsLoading(false)
+  }
+
+  const fetchItemName = async () => {
+    const { data, error } = await supabase
+    .from('game_store')
+    .select(`
+      item_id,
+      items (
+        item_name
+      )
+    `)
+    if(data) {
+      //console.log(data)
+      setItemName(data)
+    }
+    error && console.error(error)
   }
 
   // need apache from xampp to be opened
@@ -62,34 +80,34 @@ function ViewGameStoreData() {
                 <tbody>
                     <tr className=''>
                         <th className='p-3 border-2'>Bundle ID</th>
-                        <th className='p-3 border-2'>Item ID</th>
+                        <th className='p-3 border-2'>Item Name</th>
                         <th className='p-3 border-2'>Bundle Quantity</th>
                         <th className='p-3 border-2'>Coin Price</th>
                         <th className='p-3 border-2'>Added Timestamp</th>
                         <th className='p-3 border-2'>Action</th>
                     </tr>
                     {
-                        gameStoreData.map((data, index) => {
-                            return(
-                                <tr className='text-center' key={index}>
-                                    <td className='p-3 border-2'>{data.bundle_id}</td>
-                                    <td className='p-3 border-2'>{data.item_id}</td>
-                                    <td className='p-3 border-2'>{data.bundle_quantity}</td>
-                                    <td className='p-3 border-2'>{data.price_coin}</td>
-                                    <td className='p-3 border-2'>{data.added_timestamp}</td>
-                                    <td>
-                                        <EditGameStoreData
-                                                bundleID={data.bundle_id}
-                                                itemId={data.item_id}
-                                                bundleQuan={data.bundle_quantity}
-                                                priceCoin={data.price_coin}
-                                                time={data.added_timestamp} 
-                                                setChecker={setChecker} />
-                                        <DeleteGameStoreData gameStoreID={data.bundle_id} setChecker={setChecker} />
-                                    </td>
-                                </tr>
-                            )
-                        })
+                      gameStoreData.map((data, index) => {
+                        return(
+                          <tr className='text-center' key={index}>
+                              <td className='p-3 border-2'>{data.bundle_id}</td>
+                              <td className='p-3 border-2'>{itemName[index].items.item_name}</td>
+                              <td className='p-3 border-2'>{data.bundle_quantity}</td>
+                              <td className='p-3 border-2'>{data.price_coin}</td>
+                              <td className='p-3 border-2'>{data.added_timestamp}</td>
+                              <td>
+                                  <EditGameStoreData
+                                          bundleID={data.bundle_id}
+                                          itemId={data.item_id}
+                                          bundleQuan={data.bundle_quantity}
+                                          priceCoin={data.price_coin}
+                                          time={data.added_timestamp} 
+                                          setChecker={setChecker} />
+                                  <DeleteGameStoreData gameStoreID={data.bundle_id} setChecker={setChecker} />
+                              </td>
+                          </tr>
+                        )
+                      })
                     }
                 </tbody>
             </table>

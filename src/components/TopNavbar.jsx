@@ -13,6 +13,9 @@ function TopNavbar({ setIsLoggedIn }) {
           <Link to='/users'>
             <TopNavbarButton text={'Users'} />
           </Link>
+          <Link to='/accountprogress'>
+            <TopNavbarButton text={'Account Progress'} />
+          </Link>
           <Link to='/dailytasks'>
             <TopNavbarButton text={'Daily Tasks'} />
           </Link>
