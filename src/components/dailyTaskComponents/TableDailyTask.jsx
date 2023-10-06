@@ -42,7 +42,9 @@ function TableDailyTask({ checker, setChecker }) {
                         <tr>
                             <th className='p-3 border-2'>Task Title</th>
                             <th className='p-3 border-2'>Task Description</th>
-                            <th className='p-3 border-2'>Coin Quantity</th>
+                            <th className='p-3 border-2'>Reward</th>
+                            <th className='p-3 border-2'>Goal</th>
+                            <th className='p-3 border-2'>Reward Quantity</th>
                             <th className='p-3 border-2'>Action</th>
                         </tr>
                         {
@@ -51,7 +53,9 @@ function TableDailyTask({ checker, setChecker }) {
                                     <tr key={index}>
                                         <td className='p-3 border-2'>{data.task_title}</td>
                                         <td className='p-3 border-2'>{data.task_desc}</td>
-                                        <td className='p-3 border-2'>{data.coin_quantity}</td>
+                                        <td className='p-3 border-2'>{data.reward}</td>
+                                        <td className='p-3 border-2 text-center'>{data.goal}</td>
+                                        <td className='p-3 border-2 text-center'>{data.reward_quantity}</td>
                                         <td>
                                             <div className='p-2'>
                                                 <EditTaskButton 

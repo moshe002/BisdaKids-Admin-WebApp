@@ -17,6 +17,7 @@ function ViewAdminData() {
   }, [checker])
 
   const fetchAdminData = async () => {
+    setLoading(true)
     const { data, error } = await supabase
     .from('admin_accounts')
     .select()
@@ -41,45 +42,52 @@ function ViewAdminData() {
 
   return (
     <div className='flex flex-col items-center p-5'>
-      { loading && <Loading /> }
       <h1 className='text-2xl font-semibold p-3'>All Admin Accounts</h1>
       <div className='p-3'>
-        <table className='table-auto'>
-          <tbody>
-            <tr>
-              <th className='p-3 border-2'>Firstname</th>
-              <th className='p-3 border-2'>Lastname</th>
-              <th className='p-3 border-2'>Username</th>
-              <th className='p-3 border-2'>Email</th>
-              <th className='p-3 border-2'>Contact No.</th>
-              <th className='p-3 border-2'>Action</th>
-            </tr>
-            {
-              adminData.map((data, key) => {
-                return(
-                  <tr key={key}>
-                    <td className='p-3 border-2'>{data.firstname}</td>
-                    <td className='p-3 border-2'>{data.lastname}</td>
-                    <td className='p-3 border-2'>{data.username}</td>
-                    <td className='p-3 border-2'>{data.email}</td>
-                    <td className='p-3 border-2'>{data.contactNo}</td>
-                    <td>                   
-                      <EditAdmin
-                        setChecker={setChecker}
-                        userId={data.id}
-                        firstname={data.firstname}
-                        lastname={data.lastname}
-                        username={data.username}
-                        email={data.email}
-                        contactNo={data.contactNo} />                   
-                      <DeleteAdmin userId={data.id} adminUsername={data.username} setChecker={setChecker} />
-                    </td>
-                  </tr>
-                )
-              })
-            }
-          </tbody>
-        </table>
+      { 
+          loading 
+          ? 
+          <Loading />
+          :
+          <>
+            <table className='table-auto'>
+              <tbody>
+                <tr>
+                  <th className='p-3 border-2'>Firstname</th>
+                  <th className='p-3 border-2'>Lastname</th>
+                  <th className='p-3 border-2'>Username</th>
+                  <th className='p-3 border-2'>Email</th>
+                  <th className='p-3 border-2'>Contact No.</th>
+                  <th className='p-3 border-2'>Action</th>
+                </tr>
+                {
+                  adminData.map((data, key) => {
+                    return(
+                      <tr key={key}>
+                        <td className='p-3 border-2'>{data.firstname}</td>
+                        <td className='p-3 border-2'>{data.lastname}</td>
+                        <td className='p-3 border-2'>{data.username}</td>
+                        <td className='p-3 border-2'>{data.email}</td>
+                        <td className='p-3 border-2'>{data.contactNo}</td>
+                        <td>                   
+                          <EditAdmin
+                            setChecker={setChecker}
+                            userId={data.id}
+                            firstname={data.firstname}
+                            lastname={data.lastname}
+                            username={data.username}
+                            email={data.email}
+                            contactNo={data.contactNo} />                   
+                          <DeleteAdmin userId={data.id} adminUsername={data.username} setChecker={setChecker} />
+                        </td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+          </>
+        }
       </div>
     </div>
   )
