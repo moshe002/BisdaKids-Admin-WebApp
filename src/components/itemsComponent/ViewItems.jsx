@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from 'react'
 import { supabase } from '../../supabase-config'
+import { IoMdAdd } from 'react-icons/io'
 
 import Loading from '../Loading'
 import DeleteItem from './DeleteItem'
 import EditItem from './EditItem'
+import AddItem from './AddItem'
+import SuccessAddModal from '../SuccessAddModal'
 
 function ViewItems({ checker, setChecker }) {
 
     const [loading, setLoading] = useState(false)
     const [itemsData, setItemsData] = useState([])
+    const [displayAdd, setDisplayAdd] = useState(false)
+    const [successSubmit, setSuccessSubmit] = useState(false)
 
-    useEffect(() => { fetchItems()}, [checker])
+    useEffect(() => { 
+        fetchItems()
+    }, [checker])
 
     const fetchItems = async () => {
         setLoading(true)
@@ -28,12 +35,21 @@ function ViewItems({ checker, setChecker }) {
 
   return (
     <>
+        { successSubmit && <SuccessAddModal setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
+        { displayAdd && <AddItem setDisplayAdd={setDisplayAdd} setSuccessSubmit={setSuccessSubmit} /> }
         <div className='flex flex-col items-center gap-5 mt-3'>
-            <h1 className='font-bold text-2xl text-green-500'>Items</h1>
+            <div className='flex gap-3'>
+                <h1 className='font-bold text-2xl text-green-500'>Items</h1>
+                <button onClick={() => setDisplayAdd(true)} title='add button' className='hover:bg-green-500 bg-green-400 rounded-full p-1' type='button'>
+                    <p className='text-2xl'>
+                        <IoMdAdd />
+                    </p>
+                </button>   
+            </div>
             { 
                 loading
                 ?
-                <Loading />
+                    <Loading />
                 :
                 <>
                     <table className='table-auto'>

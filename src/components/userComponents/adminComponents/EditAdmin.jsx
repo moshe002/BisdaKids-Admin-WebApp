@@ -3,6 +3,8 @@ import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
 //import axios from 'axios'
 import { supabase } from '../../../supabase-config'
 
+import SuccessEditModal from '../../SuccessEditModal'
+
 function EditAdmin({ 
   firstname,
   lastname,
@@ -22,7 +24,6 @@ function EditAdmin({
         showEditModal 
         && 
         <EditModal
-          setChecker={setChecker}
           userId={userId}
           firstname={firstname}
           lastname={lastname}
@@ -32,7 +33,7 @@ function EditAdmin({
           setShowEditModal={setShowEditModal}
           setSuccessEdit={setSuccessEdit} /> 
       }
-      { successEdit && <SuccessEdit setSuccessEdit={setSuccessEdit} /> }
+      { successEdit && <SuccessEditModal setSuccessEdit={setSuccessEdit} setChecker={setChecker} /> }
       <button title='edit admin' onClick={() => setShowEditModal(true)} className='p-3 bg-violet-400 rounded-md mr-1'>
         <p className='text-xl'>
           <AiFillEdit />
@@ -51,7 +52,6 @@ function EditModal({
   contactNo, 
   setSuccessEdit,
   setShowEditModal,
-  setChecker
 }) {
   
   const [newFirstname, setNewFirstname] = useState(firstname)
@@ -59,15 +59,6 @@ function EditModal({
   const [newUsername, setNewUsername] = useState(username)
   const [newEmail, setNewEmail] = useState(email)
   const [newContactNo, setNewContactNo] = useState(contactNo)
-
-  const dataEdit = {
-    firstname: newFirstname,
-    lastname: newLastname,
-    username: newUsername,
-    email: newEmail,
-    contactNo: newContactNo,
-    userId: userId
-  }
 
   const handleEditSubmit = async (e) => {
     e.preventDefault()
@@ -88,9 +79,8 @@ function EditModal({
     } catch(error) {
       console.error(error)
     }
-    setChecker(true)
-    setSuccessEdit(true)
     setShowEditModal(false)
+    setSuccessEdit(true)
   }
   
   return(
@@ -144,7 +134,7 @@ function EditModal({
               <label htmlFor="contactNo" className='text-lg font-semibold text-center'>Contact No:</label>
               <input
                 placeholder={contactNo}
-                //value={newUsername}
+                value={newContactNo}
                 onChange={e => setNewContactNo(e.target.value)}
                 className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
                 id='contactNo' type="number" />
@@ -154,24 +144,6 @@ function EditModal({
               type="submit" 
               value='SUBMIT' />
           </form>
-      </div>
-    </div>
-  )
-}
-
-function SuccessEdit({ setSuccessEdit }) {
-
-  const handleClick = () => setSuccessEdit(false)
-
-  return(
-    <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
-      <div className='flex flex-col items-center gap-5 p-5 bg-white shadow-2xl rounded-md'>
-          <h1 className='text-4xl text-green-500 font-semibold'>Edited Successfully!</h1>
-          <button onClick={handleClick} title='close me pls' type='button'>
-              <p className='text-5xl  p-1 rounded-full hover:bg-red-500 duration-150'>
-                  <AiOutlineCloseCircle />
-              </p>
-          </button>
       </div>
     </div>
   )

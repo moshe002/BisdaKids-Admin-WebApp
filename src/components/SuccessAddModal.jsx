@@ -1,9 +1,9 @@
 import React from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
-function SuccessSubmit({ setSuccessSubmit, setChecker, setAddTask }) {
+function SuccessAddModal({ setSuccessSubmit, setChecker }) {
 
-  const handleClick = () => {
+  const handleClose = () => {
     setChecker(true)
     setSuccessSubmit(false)
   }
@@ -15,7 +15,7 @@ function SuccessSubmit({ setSuccessSubmit, setChecker, setAddTask }) {
             <button
               className='p-1 hover:bg-red-500 rounded-full duration-150' 
               type='button'
-              onClick={handleClick}>
+              onClick={handleClose}>
                 <p className='text-4xl'>
                   <AiOutlineCloseCircle />
                 </p>
@@ -25,4 +25,4 @@ function SuccessSubmit({ setSuccessSubmit, setChecker, setAddTask }) {
   )
 }
 
-export default SuccessSubmit
+export default SuccessAddModal
