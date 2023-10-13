@@ -7,7 +7,7 @@ import SuccessDeleteModal from '../SuccessDeleteModal'
 function DeleteTaskButton({ taskId, setChecker, taskTitle }) {
 
   const [deleteModal, setDeleteModal] = useState(false)
-  const [deleteSuccess, setDeleteSuccess] = useState(false)
+  const [deleteSuccess, setSuccessDelete] = useState(false)
 
   const openDeleteModal = () => setDeleteModal(true)
 
@@ -20,12 +20,12 @@ function DeleteTaskButton({ taskId, setChecker, taskTitle }) {
           taskId={taskId}
           taskTitle={taskTitle}
           setDeleteModal={setDeleteModal}
-          setDeleteSuccess={setDeleteSuccess} /> 
+          setSuccessDelete={setSuccessDelete} /> 
       }
-      { deleteSuccess && <SuccessDeleteModal setDeleteSuccess={setDeleteSuccess} setChecker={setChecker} /> }
+      { deleteSuccess && <SuccessDeleteModal setDeleteSuccess={setSuccessDelete} setChecker={setChecker} /> }
       <button onClick={openDeleteModal} className='p-3 bg-red-400 rounded-md ml-1'>
-          <p className='text-xl'>
-              <AiFillDelete />
+          <p className='text-xl'> 
+            <AiFillDelete />
           </p>
       </button>
     </>

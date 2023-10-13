@@ -21,7 +21,7 @@ function DeleteAdmin({ adminUsername, userId, setChecker }) {
           setShowModal={setShowModal}
           setDoneDelete={setDoneDelete} /> 
       }
-      { doneDelete && <SuccessDeleteModal setChecker={setChecker} setDoneDelete={setDoneDelete} /> }
+      { doneDelete && <SuccessDeleteModal setChecker={setChecker} setDeleteSuccess={setDoneDelete} /> }
       <button title='delete admin' onClick={() => setShowModal(true)} className='p-3 bg-red-400 rounded-md ml-1'>
         <p className='text-xl'>
           <AiFillDelete />

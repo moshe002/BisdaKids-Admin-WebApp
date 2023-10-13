@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 
 import AddDailyTask from '../components/dailyTaskComponents/AddDailyTask'
 import ViewDailyTask from '../components/dailyTaskComponents/TableDailyTask'
+import SuccessAddModal from '../components/SuccessAddModal'
 
 function DailyTasks() {
 
@@ -12,7 +13,7 @@ function DailyTasks() {
 
   return (
     <div className='flex flex-col items-center py-5 gap-3'>
-      { successSubmit && <SuccessSubmit setAddTask={setAddTask} setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
+      { successSubmit && <SuccessAddModal setAddTask={setAddTask} setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
       {
         addTask
         &&

@@ -42,45 +42,45 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
                 </button> 
                 <form onSubmit={handleSubmitBundle} className='flex flex-col items-center p-3 gap-3'>
                     <div className='flex flex-col text-center'>
-                    <label className='text-lg font-semibold' htmlFor="itemId">Item Id:</label>
-                    <input 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                        type="number" 
-                        id='itemName' 
-                        value={itemId}
-                        onChange={e => setItemId(e.target.value)}
-                        required /> 
+                        <label className='text-lg font-semibold' htmlFor="itemId">Item Id:</label>
+                        <input 
+                            className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                            type="number" 
+                            id='itemName' 
+                            placeholder={itemId}
+                            onChange={e => setItemId(e.target.value)}
+                            required /> 
                     </div>
                     <div className='flex flex-col text-center'>
-                    <label className='text-lg font-semibold' htmlFor="bundleQuantity">Bundle Quantity:</label>
-                    <input 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150'
-                        name="bundleQuantity" 
-                        id="bundleQuantity" 
-                        type='number'
-                        value={bundleQuantity}
-                        onChange={e => setBundleQuantity(e.target.value)}
-                        required />
+                        <label className='text-lg font-semibold' htmlFor="bundleQuantity">Bundle Quantity:</label>
+                        <input 
+                            className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150'
+                            name="bundleQuantity" 
+                            id="bundleQuantity" 
+                            type='number'
+                            placeholder={bundleQuantity}
+                            onChange={e => setBundleQuantity(e.target.value)}
+                            required />
                     </div>
                     <div className='flex flex-col text-center'>
-                    <label className='text-lg font-semibold' htmlFor="coinPrice">Coin Price:</label>
-                    <input 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                        type="number" 
-                        id='coinPrice'
-                        value={priceCoin}
-                        onChange={e => setPriceCoin(e.target.value)} 
-                        required />
+                        <label className='text-lg font-semibold' htmlFor="coinPrice">Coin Price:</label>
+                        <input 
+                            className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                            type="number" 
+                            id='coinPrice'
+                            placeholder={priceCoin}
+                            onChange={e => setPriceCoin(e.target.value)} 
+                            required />
                     </div>
                     <div className='flex flex-col text-center'>
-                    <label className='text-lg font-semibold' htmlFor="time">Added Timestamp:</label>
-                    <input 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                        type="datetime-local" 
-                        id='time'
-                        value={time}
-                        onChange={e => setTime(e.target.value)} 
-                        required />
+                        <label className='text-lg font-semibold' htmlFor="time">Added Timestamp:</label>
+                        <input 
+                            className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                            type="datetime-local" 
+                            id='time'
+                            //value={time}
+                            onChange={e => setTime(e.target.value)} 
+                            required />
                     </div>
                     <input 
                     type="submit" 
