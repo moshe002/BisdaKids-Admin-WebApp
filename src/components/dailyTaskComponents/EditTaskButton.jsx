@@ -3,6 +3,7 @@ import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
 
 import SuccessEditModal from '../SuccessEditModal'
+import ErrorEdit from '../ErrorEdit'
 
 function EditTaskButton({ 
   taskId, 
@@ -59,9 +60,12 @@ function EditModal({
   const [newReward, setNewReward] = useState(reward)
   const [newGoal, setNewGoal] = useState(goal)
   const [newRewardQuantity, setNewRewardQuantity] = useState(rewardQuantity)
+  const [loadingText, setLoadingText] = useState(false)
+  const [displayError, setDisplayError] = useState(false)
 
   const handleEditSubmit = async (e) => {
     e.preventDefault()
+    setLoadingText(true)
     // console.log(newTaskTitle)
     // console.log(newTaskDesc)
     // console.log(newCoinQuantity)
@@ -75,12 +79,18 @@ function EditModal({
       reward_quantity: newRewardQuantity 
     })
     .eq('task_id', taskId)
-    error && console.error(error)
+    if(error){
+      setDisplayError(true)
+      console.error(error)
+    }
+    setLoadingText(false)
     setSuccessEdit(true)
     setShowEditModal(false)
   }
 
   return(
+    <>
+    { displayError && <ErrorEdit displayError={setDisplayError} /> }
     <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
       <div className='flex flex-col relative items-center gap-5 p-5 bg-white shadow-2xl rounded-md overflow-y-auto overflow-x-hidden max-h-full'>
           <button 
@@ -114,35 +124,36 @@ function EditModal({
               </textarea>
             </div>
             <div className='flex flex-col text-center'>
-                  <label className='text-lg font-semibold' htmlFor="reward">Reward:</label>
-                  <input 
-                  className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                  type="text" 
-                  id='reward'
-                  placeholder={reward}
-                  value={newReward}
-                  onChange={e => setNewReward(e.target.value)} />
-                </div>
-                <div className='flex flex-col text-center'>
-                    <label className='text-lg font-semibold' htmlFor="goal">Goal:</label>
-                    <input 
-                    className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                    type="number" 
-                    id='goal'
-                    placeholder={goal}
-                    value={newGoal}
-                    onChange={e => setNewGoal(e.target.value)} />
-                </div>
-                <div className='flex flex-col text-center'>
-                    <label className='text-lg font-semibold' htmlFor="rewardQuantity">Reward Quantity:</label>
-                    <input 
-                    className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                    type="number" 
-                    id='rewardQuantity'
-                    placeholder={rewardQuantity}
-                    value={newRewardQuantity}
-                    onChange={e => setNewRewardQuantity(e.target.value)} />
-                </div>
+              <label className='text-lg font-semibold' htmlFor="reward">Reward:</label>
+              <input 
+                className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                type="text" 
+                id='reward'
+                placeholder={reward}
+                value={newReward}
+                onChange={e => setNewReward(e.target.value)} />
+            </div>
+            <div className='flex flex-col text-center'>
+              <label className='text-lg font-semibold' htmlFor="goal">Goal:</label>
+              <input 
+                className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                type="number" 
+                id='goal'
+                placeholder={goal}
+                value={newGoal}
+                onChange={e => setNewGoal(e.target.value)} />
+            </div>
+            <div className='flex flex-col text-center'>
+              <label className='text-lg font-semibold' htmlFor="rewardQuantity">Reward Quantity:</label>
+              <input 
+                className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                type="number" 
+                id='rewardQuantity'
+                placeholder={rewardQuantity}
+                value={newRewardQuantity}
+                onChange={e => setNewRewardQuantity(e.target.value)} />
+            </div>
+            { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
             <input
               className='p-1 bg-green-400 text-white font-semibold text-lg rounded-md cursor-pointer hover:bg-green-500 duration-150' 
               type="submit" 
@@ -150,6 +161,7 @@ function EditModal({
           </form>
       </div>
     </div>
+    </>
   )
 }
 

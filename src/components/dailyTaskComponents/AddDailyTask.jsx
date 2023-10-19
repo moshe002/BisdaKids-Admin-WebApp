@@ -9,9 +9,11 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
     const [reward, setReward] = useState('')
     const [goal, setGoal] = useState(0)
     const [rewardQuantity, setRewardQuantity] = useState(0)
+    const [loadingText, setLoadingText] = useState(false)
 
     const handleSentTask = async (e) => {
         e.preventDefault()
+        setLoadingText(true)
         const { error } = await supabase
         .from('daily_task')
         .insert({ 
@@ -22,6 +24,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
           reward_quantity: rewardQuantity 
         })
         error && console.error(error)
+        setLoadingText(false)
         setSuccessSubmit(true)
         setAddTask(false)
         setTaskTitle('')
@@ -45,56 +48,57 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="taskTitle">Task Title:</label>
                     <input 
-                    className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                    type="text" 
-                    id='taskTitle' 
-                    value={taskTitle}
-                    onChange={e => setTaskTitle(e.target.value)}
-                    required />
+                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                        type="text" 
+                        id='taskTitle' 
+                        value={taskTitle}
+                        onChange={e => setTaskTitle(e.target.value)}
+                        required />
                 </div>
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="taskDesc">Task Description:</label>
                     <textarea 
-                    className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150'
-                    name="taskDesc" 
-                    id="taskDesc" 
-                    cols="23" 
-                    rows="5"
-                    value={taskDesc}
-                    onChange={e => setTaskDesc(e.target.value)}
-                    required >
+                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150'
+                        name="taskDesc" 
+                        id="taskDesc" 
+                        cols="23" 
+                        rows="5"
+                        value={taskDesc}
+                        onChange={e => setTaskDesc(e.target.value)}
+                        required >
                     </textarea>
                 </div>
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="reward">Reward:</label>
                     <input 
-                    className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                    type="text" 
-                    id='reward'
-                    value={reward}
-                    onChange={e => setReward(e.target.value)} 
-                    required />
+                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                        type="text" 
+                        id='reward'
+                        value={reward}
+                        onChange={e => setReward(e.target.value)} 
+                        required />
                 </div>
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="goal">Goal:</label>
                     <input 
-                    className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                    type="number" 
-                    id='goal'
-                    value={goal}
-                    onChange={e => setGoal(e.target.value)} 
-                    required />
+                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                        type="number" 
+                        id='goal'
+                        value={goal}
+                        onChange={e => setGoal(e.target.value)} 
+                        required />
                 </div>
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="rewardQuantity">Reward Quantity:</label>
                     <input 
-                    className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                    type="number" 
-                    id='rewardQuantity'
-                    value={rewardQuantity}
-                    onChange={e => setRewardQuantity(e.target.value)} 
-                    required />
+                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                        type="number" 
+                        id='rewardQuantity'
+                        value={rewardQuantity}
+                        onChange={e => setRewardQuantity(e.target.value)} 
+                        required />
                 </div>
+                { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
                 <input 
                     type="submit" 
                     value='Submit Task' 

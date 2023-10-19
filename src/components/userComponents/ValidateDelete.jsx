@@ -1,17 +1,21 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
 
 function ValidateDelete({ userId, setDeleteUser, setSuccessDelete, username }) {
 
+    const [loadingText, setLoadingText] = useState(false)
+    
     const deletePost = async () => {
-        setDeleteUser(false)
-        setSuccessDelete(true)
+        setLoadingText(true)
         const { error } = await supabase
         .from('user_account')
         .delete()
         .eq('user_id', userId)
         error && console.error(error)
+        setLoadingText(false)
+        setDeleteUser(false)
+        setSuccessDelete(true)
     }
 
   return (
@@ -31,6 +35,7 @@ function ValidateDelete({ userId, setDeleteUser, setSuccessDelete, username }) {
                         </p>
                     </button>
                 </div>
+                { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
             </div>
         </div>
     </>

@@ -8,9 +8,11 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
     const [bundleQuantity, setBundleQuantity] = useState(0)
     const [priceCoin, setPriceCoin] = useState(0)
     const [time, setTime] = useState('')
+    const [loadingText, setLoadingText] = useState(false)
 
     const handleSubmitBundle = async (e) => {
         e.preventDefault()
+        setLoadingText(true)
         const { error } = await supabase
         .from('game_store')
         .insert({ 
@@ -20,6 +22,7 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
           added_timestamp: time
         })
         error && console.error(error)
+        setLoadingText(false)
         setSuccessSubmit(true)
         setDisplayAdd(false)
         setItemId(0)
@@ -82,6 +85,7 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
                             onChange={e => setTime(e.target.value)} 
                             required />
                     </div>
+                    { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
                     <input 
                     type="submit" 
                     value='Submit Item' 

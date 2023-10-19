@@ -7,9 +7,11 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
     const [itemId, setItemId] = useState(0)
     const [offerQuantity, setOfferQuantity] = useState(0)
     const [price, setPrice] = useState(0)
+    const [loadingText, setLoadingText] = useState(false)
 
     const handleAddSystemStore = async (e) => {
         e.preventDefault()
+        setLoadingText(true)
         const { error } = await supabase
         .from('system_store')
         .insert({ 
@@ -18,6 +20,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
           price: price
         })
         error && console.error(error)
+        setLoadingText(false)
         setDisplayAdd(false)
         setSuccessSubmit(true)
         setItemId(0)
@@ -70,6 +73,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
                         onChange={e => setPrice(e.target.value)} 
                         required />
                 </div>
+                { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
                 <input 
                 type="submit" 
                 value='Submit Item' 

@@ -33,7 +33,10 @@ function DeleteAdmin({ adminUsername, userId, setChecker }) {
 
 function DeleteAdminModal({ userId, adminUsername, setShowModal, setDoneDelete }) {
 
+  const [loadingText, setLoadingText] = useState(false)
+  
   const handleDelete = async () => {
+    setLoadingText(true)
     try {
       // const response = await axios.post(`http://localhost/BisdaKids-Admin/backend/deleteAdmin.php`, userId)
       // console.log(response.data)
@@ -45,6 +48,7 @@ function DeleteAdminModal({ userId, adminUsername, setShowModal, setDoneDelete }
     } catch(error) {
       console.error(error)
     }
+    setLoadingText(false)
     setDoneDelete(true)
     setShowModal(false)
   }
@@ -65,6 +69,7 @@ function DeleteAdminModal({ userId, adminUsername, setShowModal, setDoneDelete }
             </p>
           </button>
         </div>
+        { loadingText && <h1 className='text-red-500 text-lg text-center font-bold animate-bounce'>Loading...</h1> }
       </div>
     </div>
   )

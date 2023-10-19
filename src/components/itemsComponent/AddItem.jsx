@@ -7,9 +7,11 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
     const [itemName, setItemName] = useState('')
     const [itemDesc, setItemDesc] = useState('')
     const [itemPrice, setItemPrice] = useState(0)
+    const [loadingText, setLoadingText] = useState(false)
 
     const handleSubmitItem = async (e) => {
         e.preventDefault()
+        setLoadingText(true)
         const { error } = await supabase
         .from('items')
         .insert({ 
@@ -18,6 +20,7 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
           item_price: itemPrice,
         })
         error && console.error(error)
+        setLoadingText(false)
         setSuccessSubmit(true)
         setDisplayAdd(false)
         setItemName('')
@@ -69,6 +72,7 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
                     onChange={e => setItemPrice(e.target.value)} 
                     required />
                 </div>
+                { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
                 <input 
                     type="submit" 
                     value='Submit Item' 
