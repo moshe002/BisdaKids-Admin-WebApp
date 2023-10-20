@@ -2,12 +2,15 @@ import React, { useState } from 'react'
 import { supabase } from '../../../supabase-config'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 
+import ErrorModal from '../../ErrorModal'
+
 function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
 
     const [itemId, setItemId] = useState(0)
     const [offerQuantity, setOfferQuantity] = useState(0)
     const [price, setPrice] = useState(0)
     const [loadingText, setLoadingText] = useState(false)
+    const [displayError, setDisplayError] = useState(false)
 
     const handleAddSystemStore = async (e) => {
         e.preventDefault()
@@ -19,7 +22,10 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
           offer_quantity: offerQuantity,
           price: price
         })
-        error && console.error(error)
+        if(error){
+            setDisplayError(true)
+            console.error(error)
+        } 
         setLoadingText(false)
         setDisplayAdd(false)
         setSuccessSubmit(true)
@@ -29,6 +35,8 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
     }
 
   return (
+    <>
+    { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Adding'} /> }
     <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>    
         <div className='flex flex-col w-96 relative items-center gap-3 p-5 bg-white shadow-2xl rounded-md'>  
             <h1 className='text-blue-500 text-2xl font-bold'>Add to Item Store</h1>
@@ -73,7 +81,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
                         onChange={e => setPrice(e.target.value)} 
                         required />
                 </div>
-                { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
+                { loadingText && <h1 className='text-red-500 text-lg text-center font-bold animate-bounce'>Loading...</h1> }
                 <input 
                 type="submit" 
                 value='Submit Item' 
@@ -81,6 +89,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
             </form>
         </div>    
     </div>
+    </>
   )
 }
 

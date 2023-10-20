@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
 
+import ErrorModal from '../ErrorModal'
+
 function AddDailyTask({ setAddTask, setSuccessSubmit }) {
 
     const [taskTitle, setTaskTitle] = useState('')
@@ -10,6 +12,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
     const [goal, setGoal] = useState(0)
     const [rewardQuantity, setRewardQuantity] = useState(0)
     const [loadingText, setLoadingText] = useState(false)
+    const [displayError, setDisplayError] = useState(false)
 
     const handleSentTask = async (e) => {
         e.preventDefault()
@@ -23,7 +26,10 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
           goal: goal,
           reward_quantity: rewardQuantity 
         })
-        error && console.error(error)
+        if(error){
+            setDisplayError(true)
+            console.error(error)
+        }
         setLoadingText(false)
         setSuccessSubmit(true)
         setAddTask(false)
@@ -35,6 +41,8 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
     }
 
   return (
+    <>
+    { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Adding'} /> }
     <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
         <div className='flex flex-col w-2/6 relative items-center gap-3 p-5 bg-white shadow-2xl rounded-md overflow-y-auto max-h-full'>
             <h1 className='text-orange-400 font-bold text-2xl'>Add Daily Task</h1>
@@ -98,7 +106,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
                         onChange={e => setRewardQuantity(e.target.value)} 
                         required />
                 </div>
-                { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
+                { loadingText && <h1 className='text-red-500 text-lg text-center font-bold animate-bounce'>Loading...</h1> }
                 <input 
                     type="submit" 
                     value='Submit Task' 
@@ -106,6 +114,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
             </form>
         </div>
     </div>
+    </>
   )
 }
 

@@ -4,7 +4,7 @@ import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../../supabase-config'
 
 import SuccessEditModal from '../../SuccessEditModal'
-import ErrorEdit from '../../ErrorEdit'
+import ErrorModal from '../../ErrorModal'
 
 function EditAdmin({ 
   firstname,
@@ -93,7 +93,7 @@ function EditModal({
   
   return(
     <>
-      { displayError && <ErrorEdit displayError={setDisplayError} /> }
+      { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Editing'} /> }
       <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
         <div className='flex flex-col relative items-center gap-5 py-5 px-10 bg-white shadow-2xl rounded-md'>
             <button 

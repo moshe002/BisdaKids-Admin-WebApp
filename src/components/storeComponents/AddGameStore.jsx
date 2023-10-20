@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
 
+import ErrorModal from '../ErrorModal'
+
 function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
 
     const [itemId, setItemId] = useState(0)
@@ -9,6 +11,7 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
     const [priceCoin, setPriceCoin] = useState(0)
     const [time, setTime] = useState('')
     const [loadingText, setLoadingText] = useState(false)
+    const [displayError, setDisplayError] = useState(false)
 
     const handleSubmitBundle = async (e) => {
         e.preventDefault()
@@ -21,7 +24,10 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
           price_coin: priceCoin,
           added_timestamp: time
         })
-        error && console.error(error)
+        if(error){
+            setDisplayError(true)
+            console.error(error)
+        }
         setLoadingText(false)
         setSuccessSubmit(true)
         setDisplayAdd(false)
@@ -32,7 +38,8 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
     }
 
   return (
-    <>
+    <>  
+        { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Adding'} /> }
         <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>    
             <div className='flex flex-col relative items-center gap-3 p-5 bg-white shadow-2xl rounded-md'>  
                 <h1 className='text-blue-500 text-2xl font-bold'>Add Bundle</h1>
@@ -85,7 +92,7 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
                             onChange={e => setTime(e.target.value)} 
                             required />
                     </div>
-                    { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
+                    { loadingText && <h1 className='text-red-500 text-lg text-center font-bold animate-bounce'>Loading...</h1> }
                     <input 
                     type="submit" 
                     value='Submit Item' 

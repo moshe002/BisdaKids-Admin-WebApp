@@ -3,7 +3,7 @@ import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
 
 import SuccessEditModal from '../SuccessEditModal'
-import ErrorEdit from '../ErrorEdit'
+import ErrorModal from '../ErrorModal'
 
 function EditUserButton({ userId, username, password, setChecker }) {
 
@@ -61,7 +61,7 @@ function EditModal({ setShowEditModal, userId, username, password, setSuccessEdi
 
   return(
     <>
-      { displayError && <ErrorEdit displayError={setDisplayError} /> }
+      { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Editing'} /> }
       <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
         <div className='flex flex-col relative items-center gap-5 p-5 bg-white shadow-2xl rounded-md'>
             <button 
@@ -90,7 +90,7 @@ function EditModal({ setShowEditModal, userId, username, password, setSuccessEdi
                   className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
                   id='password' type="text" />
               </div>
-              { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
+              { loadingText && <h1 className='text-red-500 text-lg text-center font-bold animate-bounce'>Loading...</h1> }
               <input
                 className='p-1 bg-green-400 text-white font-semibold text-lg rounded-md cursor-pointer hover:bg-green-500 duration-150' 
                 type="submit" 

@@ -3,6 +3,7 @@ import { AiFillDelete, AiOutlineCheckCircle, AiOutlineCloseCircle } from 'react-
 import { supabase } from '../../supabase-config'
 
 import SuccessDeleteModal from '../SuccessDeleteModal'
+import ErrorModal from '../ErrorModal'
 
 function DeleteItem({ itemId, setChecker }) {
 
@@ -34,6 +35,7 @@ function DeleteItem({ itemId, setChecker }) {
 function DeleteModal({ itemId, setDeleteModal, setDeleteSuccess }) {
 
   const [loadingText, setLoadingText] = useState(false)
+  const [displayError, setDisplayError] = useState(false)
 
   const deletePost = async () => {
       setLoadingText(true)
@@ -41,7 +43,10 @@ function DeleteModal({ itemId, setDeleteModal, setDeleteSuccess }) {
       .from('items')
       .delete()
       .eq('item_id', itemId)
-      error && console.error(error)
+      if(error){
+        setDisplayError(true)
+        console.error(error)
+      }
       setLoadingText(false)
       setDeleteModal(false)
       setDeleteSuccess(true)
@@ -49,6 +54,7 @@ function DeleteModal({ itemId, setDeleteModal, setDeleteSuccess }) {
 
 return (
     <>
+      { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Deleting'} /> }
       <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
         <div className='flex flex-col items-center gap-5 p-5 bg-white shadow-2xl rounded-md'>
             <h1 className='text-3xl font-semibold text-green-500'>Delete Item ID {itemId}?</h1>
@@ -64,7 +70,7 @@ return (
                   </p>
               </button>
             </div>
-            { loadingText && <h1 className='text-red-500 text-lg font-bold animate-bounce'>Loading...</h1> }
+            { loadingText && <h1 className='text-red-500 text-lg text-center font-bold animate-bounce'>Loading...</h1> }
         </div>
       </div>
     </>
