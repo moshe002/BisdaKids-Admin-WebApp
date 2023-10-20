@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
 
-function EditItem({ itemId, itemName, itemDesc, itemPrice, setChecker }) {
+function EditItem({ itemId, itemName, itemDesc, itemPrice, itemImage, setChecker }) {
 
   const [showEditModal, setShowEditModal] = useState(false)
   const [successEdit, setSuccessEdit] = useState(false)
@@ -16,10 +16,11 @@ function EditItem({ itemId, itemName, itemDesc, itemPrice, setChecker }) {
         && 
         <EditModal 
           setShowEditModal={setShowEditModal}
-          itemId={itemId}
+          itemId={itemId} 
           itemName={itemName}
           itemDesc={itemDesc}
           itemPrice={itemPrice}
+          itemImage={itemImage}
           setSuccessEdit={setSuccessEdit} /> 
       }
       { successEdit && <SuccessEdit setSuccessEdit={setSuccessEdit} setChecker={setChecker} /> }
@@ -32,11 +33,12 @@ function EditItem({ itemId, itemName, itemDesc, itemPrice, setChecker }) {
   )
 }
 
-function EditModal({ setShowEditModal, itemId, itemName, itemDesc, itemPrice, setSuccessEdit }) {
+function EditModal({ setShowEditModal, itemId, itemName, itemDesc, itemPrice, itemImage, setSuccessEdit }) {
 
   const [newItemName, setNewItemName] = useState(itemName)
   const [newItemDesc, setNewItemDesc] = useState(itemDesc)
   const [newItemPrice, setNewItemPrice] = useState(itemPrice)
+  const [newItemImage, setNewItemImage] = useState(itemImage)
 
   const handleEditSubmit = async (e) => {
     e.preventDefault()
@@ -48,7 +50,8 @@ function EditModal({ setShowEditModal, itemId, itemName, itemDesc, itemPrice, se
     .update({ 
         item_name: newItemName, 
         item_desc: newItemDesc, 
-        item_price: newItemPrice 
+        item_price: newItemPrice, 
+        item_image_url: newItemImage
       })
     .eq('item_id', itemId)
     error && console.error(error)
