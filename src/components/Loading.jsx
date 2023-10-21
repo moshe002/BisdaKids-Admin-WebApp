@@ -1,9 +1,12 @@
 import React from 'react'
+import { AiOutlineLoading3Quarters } from 'react-icons/ai'
 
 function Loading() {
   return (
     <>
-      <h1 className='mt-36 text-gray-400 font-semibold text-center text-4xl'>Fetching Data...</h1>
+      <h1 className='mt-36 text-center text-4xl animate-spin'>
+        <AiOutlineLoading3Quarters />
+      </h1>
     </>
   )
 }

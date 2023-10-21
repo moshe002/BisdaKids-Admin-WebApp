@@ -10,10 +10,9 @@ function Login({ setIsLoggedIn }) {
     const navigate = useNavigate()
 
     const [loginData, setLoginData] = useState({})
+    const [displayLoading, setDisplayLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [displayError, setDisplayError] = useState(false)
-    const [displayLoading, setDisplayLoading] = useState(false)
-    const [loading, setLoading] = useState('')
 
     const handleLogin = (e) => {
         e.preventDefault()
@@ -32,6 +31,7 @@ function Login({ setIsLoggedIn }) {
     // } */
 
     const fetchData = async () => {
+        setDisplayLoading(true)
         let emailExist = ''
         let passwordExist = ''
         // checks email
@@ -61,15 +61,16 @@ function Login({ setIsLoggedIn }) {
         if(emailExist == '0' && passwordExist == '0'){
             setDisplayError(true)
             setErrorMessage('Account does not exist')
+            setDisplayLoading(false)
         } else if (emailExist == '1' && passwordExist == '0') {
             setDisplayError(true)
             setErrorMessage('Password does not exist')
+            setDisplayLoading(false)
         } else if (emailExist == '0' && passwordExist == '1') {
             setDisplayError(true)
             setErrorMessage('Email does not exist')
+            setDisplayLoading(false)
         } else {
-            setDisplayLoading(true)
-            setLoading('Loading...')
             setIsLoggedIn(true)
             localStorage.setItem('isLoggedIn', 'true');
             navigate('/users') 
@@ -113,7 +114,11 @@ function Login({ setIsLoggedIn }) {
                         {errorMessage}
                     </h1> 
                 }
-                { displayLoading && <h1 className='text-gray-400 text-xl font-bold'>{loading}</h1> }
+                { 
+                    displayLoading 
+                    && 
+                    <h1 className='text-gray-400 text-2xl font-bold animate-bounce'>Loading...</h1> 
+                }
                 <form className="flex flex-col relative gap-5" onSubmit={handleLogin}>
                     <input
                         className="bg-gray-200 p-3 rounded-md placeholder-black w-80 focus:outline-blue-500"
@@ -133,7 +138,7 @@ function Login({ setIsLoggedIn }) {
                         required />
                         <a href="" className="absolute text-xs text-gray-400 right-32 sm:right-1 -bottom-6">Forgot Password?</a>
                     <input 
-                        className="bg-blue-500 p-3 rounded-md text-white mt-7 w-80 cursor-pointer font-bold text-xl"
+                        className="bg-blue-500 p-3 rounded-md text-white w-80 cursor-pointer font-bold text-xl"
                         type="submit" 
                         name="sub"
                         value='Login' />

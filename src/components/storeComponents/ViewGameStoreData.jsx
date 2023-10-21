@@ -1,9 +1,12 @@
 import React, { useEffect, useState} from 'react'
 import { supabase } from '../../supabase-config'
+import { IoMdAdd } from 'react-icons/io'
 
 import Loading from '../Loading'
 import DeleteGameStoreData from './DeleteGameStoreData'
 import EditGameStoreData from './EditGameStoreData'
+import AddGameStore from './AddGameStore'
+import SuccessAddModal from '../SuccessAddModal'
 
 function ViewGameStoreData() {
 
@@ -11,10 +14,11 @@ function ViewGameStoreData() {
     const [itemName, setItemName] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [checker, setChecker] = useState(false)
+    const [displayAdd, setDisplayAdd] = useState(false)
+    const [successSubmit, setSuccessSubmit] = useState(false)
 
   useEffect(() => {
     getGameStoreData()
-    //fetchFromBackend()
   }, [checker])
 
   const getGameStoreData = async () => {   
@@ -70,12 +74,22 @@ function ViewGameStoreData() {
   return (
     <div className='flex flex-col items-center p-5'>
       {
-        isLoading ? 
+        isLoading 
+        ? 
         <Loading />
         :
         <>
-          <div className='flex flex-col gap-3 p-3'>
-            <h1 className='text-2xl text-center font-bold text-blue-500'>Game Store</h1>
+          { successSubmit && <SuccessAddModal setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
+          { displayAdd && <AddGameStore setDisplayAdd={setDisplayAdd} setSuccessSubmit={setSuccessSubmit} /> }
+          <div className='flex flex-col gap-5 p-3'>
+            <div className='flex justify-center gap-3'>
+              <h1 className='text-2xl text-center font-bold text-blue-500'>Game Store</h1>
+              <button onClick={() => setDisplayAdd(true)} title='add button' className='hover:bg-green-500 bg-green-400 rounded-full p-1' type='button'>
+                <p className='text-2xl'>
+                    <IoMdAdd />
+                </p>
+              </button>
+            </div>
             <table className='table-auto'>
                 <tbody>
                     <tr className=''>
@@ -95,15 +109,15 @@ function ViewGameStoreData() {
                               <td className='p-3 border-2'>{data.bundle_quantity}</td>
                               <td className='p-3 border-2'>{data.price_coin}</td>
                               <td className='p-3 border-2'>{data.added_timestamp}</td>
-                              <td>
-                                  <EditGameStoreData
-                                          bundleID={data.bundle_id}
-                                          itemId={data.item_id}
-                                          bundleQuan={data.bundle_quantity}
-                                          priceCoin={data.price_coin}
-                                          time={data.added_timestamp} 
-                                          setChecker={setChecker} />
-                                  <DeleteGameStoreData gameStoreID={data.bundle_id} setChecker={setChecker} />
+                              <td className='p-1'>
+                                <EditGameStoreData
+                                        bundleID={data.bundle_id}
+                                        itemId={data.item_id}
+                                        bundleQuan={data.bundle_quantity}
+                                        priceCoin={data.price_coin}
+                                        time={data.added_timestamp} 
+                                        setChecker={setChecker} />
+                                <DeleteGameStoreData gameStoreID={data.bundle_id} setChecker={setChecker} />
                               </td>
                           </tr>
                         )

@@ -14,8 +14,10 @@ function Signup() {
     const [showSignup, setShowSignup] = useState(false)
     const [displayError, setDisplayError] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
+    const [displayLoading, setDisplayLoading] = useState(false)
 
     const handleSignup = async (e) => {
+        setDisplayLoading(true)
         e.preventDefault()
         /*local xampp and sql code
         axios.post('http://localhost/BisdaKids-Admin/backend/signup-config.php', signupData)
@@ -25,6 +27,7 @@ function Signup() {
         if(signupData.confirmpass != signupData.pass){
             setDisplayError(true)
             setErrorMessage('Passwords are not the same')
+            setDisplayLoading(false)
         } else {
             setDisplayError(false)
             setErrorMessage('')
@@ -42,10 +45,11 @@ function Signup() {
             if(error) {
                 setDisplayError(true)
                 setErrorMessage(error)
+                setDisplayLoading(false)
             }
             setShowSignup(true)
+            setDisplayLoading(false)
         }
-        //console.log(signupData)
     }
 
     const handleFormInputs = (e) => {
@@ -80,6 +84,11 @@ function Signup() {
             <div className="flex flex-col justify-center p-3 gap-7">
                 <h1 className="font-semibold text-2xl">Sign Up</h1>
                 { displayError && <h1 className='font-semibold text-xl text-red-500'>{errorMessage}</h1> }
+                { 
+                    displayLoading 
+                    && 
+                    <h1 className='text-gray-400 text-2xl font-bold animate-bounce'>Loading...</h1> 
+                }
                 <form className="flex flex-col gap-5 mb-5" onSubmit={handleSignup}>
                     <div className="flex flex-row justify-center gap-7">
                         <input 
