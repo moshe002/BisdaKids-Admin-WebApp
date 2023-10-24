@@ -70,15 +70,15 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
     <>
       {displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Adding'} />}
       <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
-        <div className='flex flex-col relative items-center gap-3 p-5 bg-white shadow-2xl rounded-md'>
+        <div className='flex flex-col relative items-center gap-3 p-5 bg-white shadow-2xl rounded-md overflow-y-auto max-h-full'>
           <h1 className='text-2xl font-bold text-center text-green-500'>Add Item</h1>
           <button
             onClick={() => setDisplayAdd(false)}
             type='button'
-            className='absolute top-4 right-5 text-3xl p-1 rounded-full hover-bg-gray-400 duration-150'>
+            className='absolute top-4 right-5 text-3xl p-1 rounded-full hover:bg-gray-400 duration-150'>
             <AiOutlineCloseCircle />
           </button>
-          <form onSubmit={handleSubmitItem} className='flex flex-col items-center p-4 gap-3'>
+          <form onSubmit={handleSubmitItem} className='flex flex-col items-center px-10 py-4 gap-3'>
             <div className='flex flex-col text-center'>
               <label className='text-lg font-semibold' htmlFor="itemName">Item Name:</label>
               <input
@@ -96,7 +96,7 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
                 name="itemDesc"
                 id="itemDesc"
                 cols="23"
-                rows="5"
+                rows="3"
                 value={itemDesc}
                 onChange={e => setItemDesc(e.target.value)}
                 required >
@@ -115,9 +115,11 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
             <div className='flex flex-col text-center'>
               <label className='text-lg font-semibold' htmlFor="itemImage">Item Image:</label>
               <input
-                className='rounded p-1 text-center outline-none border-2 border-gray-300 focus-border-gray-400 duration-150'
+                className='w-60 rounded p-1 text-center outline-none border-2 border-gray-300 focus-border-gray-400 duration-150'
                 type="file"
+                accept='image/*'
                 id='itemImage'
+                required
                 onChange={handleFileChange} // Update the image state on change
               />
             </div>

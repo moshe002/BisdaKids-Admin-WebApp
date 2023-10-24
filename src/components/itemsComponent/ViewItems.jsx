@@ -37,7 +37,7 @@ function ViewItems({ checker, setChecker }) {
     <>
         { successSubmit && <SuccessAddModal setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
         { displayAdd && <AddItem setDisplayAdd={setDisplayAdd} setSuccessSubmit={setSuccessSubmit} /> }
-        <div className='flex flex-col items-center gap-5 mt-3'>
+        <div className='flex flex-col items-center gap-5 mt-10'>
             <div className='flex gap-3'>
                 <h1 className='font-bold text-2xl text-green-500'>Items</h1>
                 <button onClick={() => setDisplayAdd(true)} title='add button' className='hover:bg-green-500 bg-green-400 rounded-full p-1' type='button'>
@@ -59,24 +59,29 @@ function ViewItems({ checker, setChecker }) {
                             <th className='p-3 border-2'>Item Name</th>
                             <th className='p-3 border-2'>Item Description</th>
                             <th className='p-3 border-2'>Item Price</th>
+                            <th className='p-3 border-2'>Item Image Name</th>
                             <th className='p-3 border-2'>Action</th>
                         </tr>
                         {
                             itemsData.map((data, index) => {
+                                const urlParts = `${data.item_image_url}`.split('/')
+                                const shortenedUrl = urlParts[urlParts.length - 1];
+                                
                                 return(
                                     <tr key={index}>
                                         <td className='p-3 border-2'>{data.item_id}</td>
                                         <td className='p-3 border-2'>{data.item_name}</td>
                                         <td className='p-3 border-2'>{data.item_desc}</td>
                                         <td className='p-3 border-2'>{data.item_price}</td>
-                                        <td>
+                                        <td className='p-3 border-2'>{shortenedUrl}</td>
+                                        <td className='p-2'>
                                             <EditItem 
                                                 itemId={data.item_id}
                                                 itemName={data.item_name}
                                                 itemDesc={data.item_desc}
                                                 itemPrice={data.item_price} 
                                                 setChecker={setChecker} />
-                                            <DeleteItem itemId={data.item_id} setChecker={setChecker} />
+                                            <DeleteItem imageUrl={data.item_image_url} itemId={data.item_id} setChecker={setChecker} />
                                         </td>
                                     </tr>
                                 )

@@ -5,7 +5,7 @@ import { supabase } from '../../supabase-config'
 import SuccessDeleteModal from '../SuccessDeleteModal'
 import ErrorModal from '../ErrorModal'
 
-function DeleteItem({ itemId, setChecker }) {
+function DeleteItem({ imageUrl, itemId, setChecker }) {
 
   const [deleteModal, setDeleteModal] = useState(false)
   const [deleteSuccess, setDeleteSuccess] = useState(false)
@@ -18,6 +18,7 @@ function DeleteItem({ itemId, setChecker }) {
         deleteModal 
         && 
         <DeleteModal 
+          imageUrl={imageUrl}
           itemId={itemId}
           setDeleteModal={setDeleteModal}
           setDeleteSuccess={setDeleteSuccess} /> 
@@ -32,13 +33,19 @@ function DeleteItem({ itemId, setChecker }) {
   )
 }
 
-function DeleteModal({ itemId, setDeleteModal, setDeleteSuccess }) {
+function DeleteModal({ imageUrl, itemId, setDeleteModal, setDeleteSuccess }) {
 
   const [loadingText, setLoadingText] = useState(false)
   const [displayError, setDisplayError] = useState(false)
 
+  //console.log(imageUrl)
+  // const urlParts = `${imageUrl}`.split('/')
+  // const shortenedUrl = urlParts.slice(-2).join('/')
+  // console.log(shortenedUrl)
+
   const deletePost = async () => {
-      setLoadingText(true)
+    setLoadingText(true)
+    if(itemId){
       const { error } = await supabase
       .from('items')
       .delete()
@@ -47,9 +54,21 @@ function DeleteModal({ itemId, setDeleteModal, setDeleteSuccess }) {
         setDisplayError(true)
         console.error(error)
       }
-      setLoadingText(false)
-      setDeleteModal(false)
-      setDeleteSuccess(true)
+
+      const urlParts = `${imageUrl}`.split('/')
+      const shortenedUrl = urlParts.slice(-2).join('/')
+      //console.log(shortenedUrl)
+
+      const { data, error:bucketError } = await supabase
+      .storage
+      .from('item_pics')
+      .remove([`${shortenedUrl}`])
+      data && console.log('deleted') //console.log(data)
+      bucketError && console.error(bucketError)
+    }
+    setLoadingText(false)
+    setDeleteModal(false)
+    setDeleteSuccess(true)
   }
 
 return (
