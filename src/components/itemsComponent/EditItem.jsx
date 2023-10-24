@@ -36,26 +36,35 @@ function EditItem({ itemId, itemName, itemDesc, itemPrice, itemImage, setChecker
   )
 }
 
-function EditModal({ setShowEditModal, itemId, itemName, itemDesc, itemPrice, itemImage, setSuccessEdit }) {
+function EditModal({ 
+  setShowEditModal, 
+  itemId, 
+  itemName, 
+  itemDesc, 
+  itemPrice, 
+  itemImage, 
+  setSuccessEdit 
+}) {
 
   const [newItemName, setNewItemName] = useState(itemName)
   const [newItemDesc, setNewItemDesc] = useState(itemDesc)
   const [newItemPrice, setNewItemPrice] = useState(itemPrice)
-  const [newItemImage, setNewItemImage] = useState({})
+  const [newItemImage, setNewItemImage] = useState()
   const [loadingText, setLoadingText] = useState(false)
   const [displayError, setDisplayError] = useState(false)
+
+  //console.log('what is this: ' + itemImage)
 
   const handleEditSubmit = async (e) => {
     e.preventDefault()
     setLoadingText(true)
     if(newItemImage != null){
       await uploadNewImage()
-      // get the url of the image
-      const { data:publicURL } = supabase.storage.from('item_pics').getPublicUrl(`items/${newItemImage.name}`) // ${name}/${imageName}
-      await updatePost(publicURL.publicUrl) // updates the post
-      //console.log("new url: ", publicURL.publicUrl)
+      const { data:publicURL } = supabase.storage.from('item_pics').getPublicUrl(`items/${newItemImage.name}`) // get the url of the image
+        await updatePost(publicURL.publicUrl) // updates the post
+        //console.log("new url: ", publicURL.publicUrl)
       } else {
-        await updatePost(imgUrl) // updates the post
+        await updatePost(itemImage) // updates the post
       }
       //console.log(newItemImage.name)
       setLoadingText(false)

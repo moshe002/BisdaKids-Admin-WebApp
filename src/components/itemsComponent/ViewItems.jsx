@@ -77,6 +77,7 @@ function ViewItems({ checker, setChecker }) {
                                         <td className='p-2'>
                                             <EditItem 
                                                 itemId={data.item_id}
+                                                itemImage={data.item_image_url}
                                                 itemName={data.item_name}
                                                 itemDesc={data.item_desc}
                                                 itemPrice={data.item_price} 
