@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { supabase } from '../supabase-config'
+import { DarkModeContext } from '../context/themeContext'
 
 import Loading from '../components/Loading'
 
 function SaleTransac() {
+
+  const { darkMode } = useContext(DarkModeContext)
 
   const [saleTransac, setSaleTransac] = useState([])
   const [loading, setLoading] = useState(false)
@@ -25,7 +28,7 @@ function SaleTransac() {
   }
 
   return (
-    <div className='flex flex-col gap-5 items-center p-3'>
+    <div className={`flex flex-col gap-5 items-center p-3 ${darkMode ? 'bg-zinc-600' : 'bg-white'}`}>
       <h1 className='font-bold text-2xl text-red-500 mt-8'>Sale Transactions</h1>
       <div className='p-5'>
         {
@@ -33,7 +36,7 @@ function SaleTransac() {
           ?
           <Loading />
           :
-          <table className='table-auto'>
+          <table className={`table-auto ${darkMode ? 'text-white' : 'text-black'}`}>
             <tbody>
               <tr>
                 <th className='p-3 border-2'>Transaction ID</th>

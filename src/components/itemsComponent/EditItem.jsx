@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
+import { DarkModeContext } from '../../context/themeContext'
 
 import SuccessEditModal from '../SuccessEditModal'
 import ErrorModal from '../ErrorModal'
@@ -45,6 +46,8 @@ function EditModal({
   itemImage, 
   setSuccessEdit 
 }) {
+
+  const { darkMode } = useContext(DarkModeContext)
 
   const [newItemName, setNewItemName] = useState(itemName)
   const [newItemDesc, setNewItemDesc] = useState(itemDesc)
@@ -105,7 +108,7 @@ function EditModal({
     <>
     { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Editing'} /> }
     <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
-      <div className='flex flex-col relative items-center gap-5 p-5 bg-white shadow-2xl rounded-md overflow-y-auto max-h-full'>
+      <div className={`flex flex-col relative items-center gap-5 p-5 ${darkMode ? 'bg-zinc-700 text-white' : 'bg-white text-black'} shadow-2xl rounded-md overflow-y-auto max-h-full`}>
         <button 
           onClick={() => setShowEditModal(false)} 
           type='button' 
@@ -120,13 +123,13 @@ function EditModal({
               placeholder={itemName}
               value={newItemName}
               onChange={e => setNewItemName(e.target.value)}
-              className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+              className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
               id='itemName' type="text" />
           </div>
           <div className='flex flex-col'>
             <label htmlFor="itemDesc" className='text-lg font-semibold text-center'>Item Description:</label>
             <textarea 
-              className='rounded-md p-1 text-center outline-none border-2 focus:border-gray-400 duration-150'
+              className='rounded-md p-1 text-center text-black outline-none border-2 focus:border-gray-400 duration-150'
               name="itemDesc" 
               id="itemDesc" 
               cols="15" 
@@ -142,7 +145,7 @@ function EditModal({
               placeholder={itemPrice}
               //value={newCoinQuantity}
               onChange={e => setNewItemPrice(e.target.value)}
-              className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+              className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
               id='itemPrice' type="number" />
           </div>
           <div className='flex flex-col'>

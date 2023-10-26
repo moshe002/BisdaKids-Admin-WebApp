@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { supabase } from '../supabase-config'
+import { DarkModeContext } from '../context/themeContext'
 
 import Loading from '../components/Loading'
 
 function AccountProgress() {
+
+    const { darkMode } = useContext(DarkModeContext)
 
     const [dataAccountProgress, setDataAccountProgress] = useState([])
     const [loading, setLoading] = useState(false)
@@ -26,7 +29,7 @@ function AccountProgress() {
     }
 
   return (
-    <div className='flex flex-col items-center p-3 gap-5'>
+    <div className={`flex flex-col h-screen items-center p-3 gap-5 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'}`}>
         <h1 className='text-2xl text-center font-bold text-green-500 mt-8'>Account Progress</h1>
         {
             loading

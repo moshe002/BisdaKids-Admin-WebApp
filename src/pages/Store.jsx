@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
+import { DarkModeContext } from '../context/themeContext'
 
 // import Box from '@mui/material/Box';
 // import Button from '@mui/material/Button';
@@ -22,6 +23,9 @@ import ViewSystemStoreData from '../components/storeComponents/systemStore/ViewS
 // };
 
 function Store() {
+
+  const { darkMode } = useContext(DarkModeContext)
+
   const [renderThis, setRenderThis] = useState(true)
   const [successModal, setSuccessModal] = useState(false)
   const [checker, setChecker] = useState(false)
@@ -31,7 +35,7 @@ function Store() {
   // const handleClose = () => setOpen(false);
 
   return (
-    <div className='flex flex-col items-center gap-3'>
+    <div className={`${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} flex flex-col h-screen items-center gap-3`}>
       {successModal && <SuccessSubmit setSuccessModal={setSuccessModal} /> }
       <div className='flex justify-center items-center gap-14 mt-10'>
         <button

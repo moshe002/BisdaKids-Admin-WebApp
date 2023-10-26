@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { supabase } from '../supabase-config'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
+import { DarkModeContext } from '../context/themeContext';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -23,6 +24,8 @@ const style = {
 
 
 function Items() {
+
+  const { darkMode } = useContext(DarkModeContext)
 
   const [itemName, setItemName] = useState('')
   const [itemDesc, setItemDesc] = useState('')
@@ -53,7 +56,7 @@ function Items() {
 
   return (
     <>
-    <div className='flex flex-col items-center gap-5'>
+    <div className={`flex flex-col h-screen items-center gap-5 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'}`}>
       {successModal && <SuccessSubmit setSuccessModal={setSuccessModal} /> }
       <ViewItems checker={checker} setChecker={setChecker} />  
       {/* <Button onClick={handleOpen} variant='contained'>Add Item</Button>

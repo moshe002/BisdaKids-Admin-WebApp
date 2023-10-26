@@ -1,10 +1,13 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
+import { DarkModeContext } from '../../context/themeContext'
 
 import ErrorModal from '../ErrorModal'
 
 function AddDailyTask({ setAddTask, setSuccessSubmit }) {
+
+    const { darkMode } = useContext(DarkModeContext)
 
     const [taskTitle, setTaskTitle] = useState('')
     const [taskDesc, setTaskDesc] = useState('')
@@ -44,7 +47,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
     <>
     { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Adding'} /> }
     <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
-        <div className='flex flex-col w-2/6 relative items-center gap-3 p-5 bg-white shadow-2xl rounded-md overflow-y-auto max-h-full'>
+        <div className={`flex flex-col w-2/6 relative items-center gap-3 p-5 ${darkMode ? 'bg-zinc-700 text-white' : 'bg-white text-black'} shadow-2xl rounded-md overflow-y-auto max-h-full`}>
             <h1 className='text-orange-400 font-bold text-2xl'>Add Daily Task</h1>
             <button 
                 onClick={() => setAddTask(false)} 
@@ -56,7 +59,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="taskTitle">Task Title:</label>
                     <input 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                        className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
                         type="text" 
                         id='taskTitle' 
                         value={taskTitle}
@@ -66,7 +69,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="taskDesc">Task Description:</label>
                     <textarea 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150'
+                        className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150'
                         name="taskDesc" 
                         id="taskDesc" 
                         cols="23" 
@@ -79,7 +82,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="reward">Reward:</label>
                     <input 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                        className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
                         type="text" 
                         id='reward'
                         value={reward}
@@ -89,7 +92,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="goal">Goal:</label>
                     <input 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                        className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
                         type="number" 
                         id='goal'
                         value={goal}
@@ -99,7 +102,7 @@ function AddDailyTask({ setAddTask, setSuccessSubmit }) {
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="rewardQuantity">Reward Quantity:</label>
                     <input 
-                        className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                        className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
                         type="number" 
                         id='rewardQuantity'
                         value={rewardQuantity}

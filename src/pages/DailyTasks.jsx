@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
+import { DarkModeContext } from '../context/themeContext'
 //import Button from '@mui/material/Button';
 
 import AddDailyTask from '../components/dailyTaskComponents/AddDailyTask'
@@ -7,12 +8,14 @@ import SuccessAddModal from '../components/SuccessAddModal'
 
 function DailyTasks() {
 
+  const { darkMode } = useContext(DarkModeContext)
+
   const [successSubmit, setSuccessSubmit] = useState(false)
   const [checker, setChecker] = useState(false)
   const [addTask, setAddTask] = useState(false)
 
   return (
-    <div className='flex flex-col items-center py-5 gap-3'>
+    <div className={`flex flex-col h-screen items-center py-5 gap-3 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'}`}>
       { successSubmit && <SuccessAddModal setAddTask={setAddTask} setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
       {
         addTask

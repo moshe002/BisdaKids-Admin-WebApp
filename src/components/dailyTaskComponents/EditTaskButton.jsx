@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
 import { supabase } from '../../supabase-config'
+import { DarkModeContext } from '../../context/themeContext'
 
 import SuccessEditModal from '../SuccessEditModal'
 import ErrorModal from '../ErrorModal'
@@ -55,6 +56,8 @@ function EditModal({
   rewardQuantity, 
   setSuccessEdit }) {
 
+  const { darkMode } = useContext(DarkModeContext)
+
   const [newTaskTitle, setNewTaskTitle] = useState(taskTitle)
   const [newTaskDesc, setNewTaskDesc] = useState(taskDesc)
   const [newReward, setNewReward] = useState(reward)
@@ -92,7 +95,7 @@ function EditModal({
     <>
     { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Editing'} /> }
     <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
-      <div className='flex flex-col relative items-center gap-5 p-5 bg-white shadow-2xl rounded-md overflow-y-auto overflow-x-hidden max-h-full'>
+      <div className={`flex flex-col relative items-center gap-5 p-5 ${darkMode ? 'bg-zinc-700 text-white' : 'bg-white text-black'} shadow-2xl rounded-md overflow-y-auto overflow-x-hidden max-h-full`}>
           <button 
             onClick={() => setShowEditModal(false)} 
             type='button' 
@@ -107,13 +110,13 @@ function EditModal({
                 placeholder={taskTitle}
                 value={newTaskTitle}
                 onChange={e => setNewTaskTitle(e.target.value)}
-                className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+                className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
                 id='taskTitle' type="text" />
             </div>
             <div className='flex flex-col'>
               <label htmlFor="taskDesc" className='text-lg font-semibold text-center'>Task Description:</label>
               <textarea 
-                className='rounded-md p-1 text-center outline-none border-2 focus:border-gray-400 duration-150'
+                className='rounded-md p-1 text-center text-black outline-none border-2 focus:border-gray-400 duration-150'
                 name="taskDesc" 
                 id="taskDesc" 
                 cols="23" 
@@ -126,7 +129,7 @@ function EditModal({
             <div className='flex flex-col text-center'>
               <label className='text-lg font-semibold' htmlFor="reward">Reward:</label>
               <input 
-                className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
                 type="text" 
                 id='reward'
                 placeholder={reward}
@@ -136,7 +139,7 @@ function EditModal({
             <div className='flex flex-col text-center'>
               <label className='text-lg font-semibold' htmlFor="goal">Goal:</label>
               <input 
-                className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
                 type="number" 
                 id='goal'
                 placeholder={goal}
@@ -146,7 +149,7 @@ function EditModal({
             <div className='flex flex-col text-center'>
               <label className='text-lg font-semibold' htmlFor="rewardQuantity">Reward Quantity:</label>
               <input 
-                className='rounded p-1 text-center outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
+                className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
                 type="number" 
                 id='rewardQuantity'
                 placeholder={rewardQuantity}

@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { supabase } from '../../../supabase-config'
 import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai'
+import { DarkModeContext } from '../../../context/themeContext'
 
 import SuccessEditModal from '../../SuccessEditModal'
 import ErrorModal from '../../ErrorModal'
@@ -42,6 +43,8 @@ function EditModal({
   price
 }) {
 
+  const { darkMode } = useContext(DarkModeContext)
+
   const [newOfferQuantity, setNewOfferQuantity] = useState(offerQuantity)
   const [newPrice, setNewPrice] = useState(price)
   const [loadingText, setLoadingText] = useState(false)
@@ -73,7 +76,7 @@ function EditModal({
     <>
     { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Editing'} /> }
     <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
-      <div className='flex flex-col relative items-center gap-5 p-5 bg-white shadow-2xl rounded-md'>
+      <div className={`flex flex-col relative items-center gap-5 p-5 ${darkMode ? 'bg-zinc-700 text-white' : 'bg-white text-black'} shadow-2xl rounded-md`}>
           <button 
             onClick={() => setShowEditModal(false)} 
             type='button' 
@@ -88,7 +91,7 @@ function EditModal({
                 placeholder={offerQuantity}
                 value={newOfferQuantity}
                 onChange={e => setNewOfferQuantity(e.target.value)}
-                className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+                className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
                 id='offerQuan' type="number" />
             </div>
             <div className='flex flex-col'>
@@ -97,7 +100,7 @@ function EditModal({
                 placeholder={price}
                 value={newPrice}
                 onChange={e => setNewPrice(e.target.value)}
-                className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+                className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
                 id='price' type="number" />
             </div>
             { loadingText && <h1 className='text-red-500 text-lg text-center font-bold animate-bounce'>Loading...</h1> }

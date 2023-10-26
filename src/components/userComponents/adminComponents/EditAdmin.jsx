@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { AiFillEdit, AiOutlineCloseCircle } from 'react-icons/ai' 
+import { DarkModeContext } from '../../../context/themeContext'
 //import axios from 'axios'
 import { supabase } from '../../../supabase-config'
 
@@ -54,6 +55,8 @@ function EditModal({
   setSuccessEdit,
   setShowEditModal,
 }) {
+
+  const { darkMode } = useContext(DarkModeContext)
   
   const [newFirstname, setNewFirstname] = useState(firstname)
   const [newLastname, setNewLastname] = useState(lastname)
@@ -95,7 +98,7 @@ function EditModal({
     <>
       { displayError && <ErrorModal displayError={setDisplayError} errorText={'Error Editing'} /> }
       <div className='fixed top-0 left-0 p-5 w-full h-screen flex justify-center items-center bg-gray-600 bg-opacity-50 z-40'>
-        <div className='flex flex-col relative items-center gap-5 py-5 px-10 bg-white shadow-2xl rounded-md'>
+        <div className={`flex flex-col relative items-center gap-5 py-5 px-10 ${darkMode ? 'bg-zinc-700 text-white' : 'bg-white text-black'} shadow-2xl rounded-md`}>
             <button 
               onClick={() => setShowEditModal(false)} 
               type='button' 
@@ -110,7 +113,7 @@ function EditModal({
                   placeholder={firstname}
                   value={newFirstname}
                   onChange={e => setNewFirstname(e.target.value)}
-                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
                   id='firstname' type="text" />
               </div>
               <div className='flex flex-col'>
@@ -119,7 +122,7 @@ function EditModal({
                   placeholder={lastname}
                   value={newLastname}
                   onChange={e => setNewLastname(e.target.value)}
-                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
                   id='lastname' type="text" />
               </div>
               <div className='flex flex-col'>
@@ -128,7 +131,7 @@ function EditModal({
                   placeholder={username}
                   value={newUsername}
                   onChange={e => setNewUsername(e.target.value)}
-                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
                   id='username' type="text" />
               </div>
               <div className='flex flex-col'>
@@ -137,7 +140,7 @@ function EditModal({
                   placeholder={email}
                   value={newEmail}
                   onChange={e => setNewEmail(e.target.value)}
-                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
                   id='email' type="text" />
               </div>
               <div className='flex flex-col'>
@@ -146,7 +149,7 @@ function EditModal({
                   placeholder={contactNo}
                   value={newContactNo}
                   onChange={e => setNewContactNo(e.target.value)}
-                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center p-1' 
+                  className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
                   id='contactNo' type="number" />
               </div>
               { loadingText && <h1 className='text-red-500 text-lg text-center font-bold animate-bounce'>Loading...</h1> }
