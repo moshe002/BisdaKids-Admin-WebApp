@@ -28,38 +28,36 @@ function SaleTransac() {
   }
 
   return (
-    <div className={`flex flex-col gap-5 items-center p-3 ${darkMode ? 'bg-zinc-600' : 'bg-white'}`}>
+    <div className={`flex flex-col h-screen gap-5 items-center p-3 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'}`}>
       <h1 className='font-bold text-2xl text-red-500 mt-8'>Sale Transactions</h1>
-      <div className='p-5'>
-        {
-          loading
-          ?
-          <Loading />
-          :
-          <table className={`table-auto ${darkMode ? 'text-white' : 'text-black'}`}>
-            <tbody>
-              <tr>
-                <th className='p-3 border-2'>Transaction ID</th>
-                <th className='p-3 border-2'>Bundle ID</th>
-                <th className='p-3 border-2'>User ID</th>
-                <th className='p-3 border-2'>Timestamp</th>
-              </tr>
-              {
-                saleTransac.map((data, index) => {
-                  return (
-                    <tr className='text-center' key={index}>
-                      <td className='p-3 border-2'>{data.transaction_id}</td>
-                      <td className='p-3 border-2'>{data.bundle_id}</td>
-                      <td className='p-3 border-2'>{data.user_id}</td>
-                      <td className='p-3 border-2'>{data.timestamp}</td>
-                    </tr>
-                  )
-                })
-              }
-            </tbody>
-          </table>
-        }
-      </div>
+      {
+        loading
+        ?
+        <Loading />
+        :
+        <table className='table-auto'>
+          <tbody>
+            <tr>
+              <th className='p-3 border-2'>Transaction ID</th>
+              <th className='p-3 border-2'>Bundle ID</th>
+              <th className='p-3 border-2'>User ID</th>
+              <th className='p-3 border-2'>Timestamp</th>
+            </tr>
+            {
+              saleTransac.map((data, index) => {
+                return (
+                  <tr className='text-center' key={index}>
+                    <td className='p-3 border-2'>{data.transaction_id}</td>
+                    <td className='p-3 border-2'>{data.bundle_id}</td>
+                    <td className='p-3 border-2'>{data.user_id}</td>
+                    <td className='p-3 border-2'>{data.timestamp}</td>
+                  </tr>
+                )
+              })
+            }
+          </tbody>
+        </table>
+      }
     </div>
   )
 }
