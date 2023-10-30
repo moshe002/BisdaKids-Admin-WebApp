@@ -6,7 +6,7 @@ import { DarkModeContext } from '../../context/themeContext'
 import SuccessEditModal from '../SuccessEditModal'
 import ErrorModal from '../ErrorModal'
 
-function EditItem({ bundleID, itemId, bundleQuan, priceCoin, time, setChecker }) {
+function EditItem({ bundleID, itemName, bundleQuan, priceCoin, time, setChecker }) {
 
   const [showEditModal, setShowEditModal] = useState(false)
   const [successEdit, setSuccessEdit] = useState(false)
@@ -21,7 +21,7 @@ function EditItem({ bundleID, itemId, bundleQuan, priceCoin, time, setChecker })
         <EditModal 
           setShowEditModal={setShowEditModal}
           bundleID={bundleID}
-          itemId={itemId}
+          itemName={itemName}
           bundleQuan={bundleQuan}
           priceCoin={priceCoin}
           time={time}
@@ -40,7 +40,7 @@ function EditItem({ bundleID, itemId, bundleQuan, priceCoin, time, setChecker })
 function EditModal({ 
   setShowEditModal, 
   bundleID, 
-  itemId, 
+  itemName, 
   bundleQuan, 
   priceCoin, 
   time, 
@@ -49,7 +49,7 @@ function EditModal({
 
   const { darkMode } = useContext(DarkModeContext)
 
-  const [newItemId, setNewItemId] = useState(itemId) 
+  const [newItemName, setNewItemName] = useState(itemName) 
   const [newBundleQuan, setNewBundleQuan] = useState(bundleQuan)
   const [newPriceCoin, setNewPriceCoin] = useState(priceCoin)
   const [newTime, setNewTime] = useState(time)
@@ -62,7 +62,7 @@ function EditModal({
     const { error } = await supabase
     .from('game_store')
     .update({ 
-        item_id: newItemId,
+        item_name: newItemName,
         bundle_quantity: newBundleQuan, 
         price_coin: newPriceCoin, 
         added_timestamp: newTime 
@@ -91,13 +91,13 @@ function EditModal({
         <h1 className='text-green-500 font-bold text-2xl'>Edit Bundle ID {bundleID}</h1>
         <form className='flex flex-col gap-3 py-3 px-14' onSubmit={handleEditSubmit}>
           <div className='flex flex-col'>
-            <label htmlFor="itemID" className='text-lg font-semibold text-center'>Item ID:</label>
+            <label htmlFor="itemName" className='text-lg font-semibold text-center'>Item Name:</label>
             <input 
-              placeholder={itemId}
-              value={newItemId}
-              onChange={e => setNewItemId(e.target.value)}
+              placeholder={itemName}
+              value={newItemName}
+              onChange={e => setNewItemName(e.target.value)}
               className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
-              id='itemId' type="number" />
+              id='itemName' type="text" />
           </div>
           <div className='flex flex-col'>
             <label htmlFor="bundleQuan" className='text-lg font-semibold text-center'>Bundle Quantity:</label>

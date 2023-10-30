@@ -4,12 +4,13 @@ import { supabase } from '../../supabase-config'
 import { DarkModeContext } from '../../context/themeContext'
 
 import ErrorModal from '../ErrorModal'
+import DropDownItemList from '../dropDownItemList'
 
 function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
 
     const { darkMode } = useContext(DarkModeContext)
 
-    const [itemId, setItemId] = useState(0)
+    const [itemName, setItemName] = useState('hint')
     const [bundleQuantity, setBundleQuantity] = useState(0)
     const [priceCoin, setPriceCoin] = useState(0)
     const [time, setTime] = useState('')
@@ -22,7 +23,7 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
         const { error } = await supabase
         .from('game_store')
         .insert({ 
-          item_id: itemId,
+          item_name: itemName,
           bundle_quantity: bundleQuantity,
           price_coin: priceCoin,
           added_timestamp: time
@@ -34,7 +35,7 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
         setLoadingText(false)
         setSuccessSubmit(true)
         setDisplayAdd(false)
-        setItemId(0)
+        setItemName('hint')
         setBundleQuantity(0)
         setPriceCoin(0)
         setTime('')
@@ -55,14 +56,8 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
                 </button> 
                 <form onSubmit={handleSubmitBundle} className='flex flex-col items-center p-3 gap-3'>
                     <div className='flex flex-col text-center'>
-                        <label className='text-lg font-semibold' htmlFor="itemId">Item Id:</label>
-                        <input 
-                            className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                            type="number" 
-                            id='itemName' 
-                            placeholder={itemId}
-                            onChange={e => setItemId(e.target.value)}
-                            required /> 
+                        <label className='text-lg font-semibold' htmlFor="itemList">Item Name:</label>
+                        <DropDownItemList setItemName={setItemName} />
                     </div>
                     <div className='flex flex-col text-center'>
                         <label className='text-lg font-semibold' htmlFor="bundleQuantity">Bundle Quantity:</label>

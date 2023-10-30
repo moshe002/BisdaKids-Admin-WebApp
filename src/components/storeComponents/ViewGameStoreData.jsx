@@ -11,7 +11,7 @@ import SuccessAddModal from '../SuccessAddModal'
 function ViewGameStoreData() {
 
     const [gameStoreData, setGameStoreData] = useState([])
-    const [itemName, setItemName] = useState([])
+    //const [itemName, setItemName] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [checker, setChecker] = useState(false)
     const [displayAdd, setDisplayAdd] = useState(false)
@@ -32,25 +32,26 @@ function ViewGameStoreData() {
       setGameStoreData(data)
     }
     error && console.log(error)
-    await fetchItemName()
+    //await fetchItemName()
     setIsLoading(false)
   }
 
-  const fetchItemName = async () => {
-    const { data, error } = await supabase
-    .from('game_store')
-    .select(`
-      item_id,
-      items (
-        item_name
-      )
-    `)
-    if(data) {
-      //console.log(data)
-      setItemName(data)
-    }
-    error && console.error(error)
-  }
+  // const fetchItemName = async () => {
+  //   const { data, error } = await supabase
+  //   .from('game_store')
+  //   .select(`
+  //     item_id,
+  //     items (
+  //       item_name
+  //     )
+  //   `)
+  //   if(data) {
+  //     //console.log(data)
+  //     setItemName(data)
+  //   }
+  //   error && console.error(error)
+  // }
+  //<td className='p-3 border-2'>{itemName[index].items.item_name}</td>
 
   // need apache from xampp to be opened
   // const fetchFromBackend = () => {
@@ -105,14 +106,14 @@ function ViewGameStoreData() {
                         return(
                           <tr className='text-center' key={index}>
                               <td className='p-3 border-2'>{data.bundle_id}</td>
-                              <td className='p-3 border-2'>{itemName[index].items.item_name}</td>
+                              <td className='p-3 border-2'>{data.item_name}</td>
                               <td className='p-3 border-2'>{data.bundle_quantity}</td>
                               <td className='p-3 border-2'>{data.price_coin}</td>
                               <td className='p-3 border-2'>{data.added_timestamp}</td>
                               <td className='p-1'>
                                 <EditGameStoreData
                                         bundleID={data.bundle_id}
-                                        itemId={data.item_id}
+                                        itemName={data.item_name}
                                         bundleQuan={data.bundle_quantity}
                                         priceCoin={data.price_coin}
                                         time={data.added_timestamp} 

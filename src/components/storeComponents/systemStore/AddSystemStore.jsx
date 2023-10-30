@@ -4,12 +4,13 @@ import { AiOutlineCloseCircle } from 'react-icons/ai'
 import { DarkModeContext } from '../../../context/themeContext'
 
 import ErrorModal from '../../ErrorModal'
+import DropDownItemList from '../../dropDownItemList'
 
 function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
 
     const { darkMode } = useContext(DarkModeContext)
 
-    const [itemId, setItemId] = useState(0)
+    const [itemName, setItemName] = useState('hint')
     const [offerQuantity, setOfferQuantity] = useState(0)
     const [price, setPrice] = useState(0)
     const [loadingText, setLoadingText] = useState(false)
@@ -21,7 +22,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
         const { error } = await supabase
         .from('system_store')
         .insert({ 
-          item_id: itemId,
+          item_name: itemName,
           offer_quantity: offerQuantity,
           price: price
         })
@@ -32,7 +33,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
         setLoadingText(false)
         setDisplayAdd(false)
         setSuccessSubmit(true)
-        setItemId(0)
+        setItemName('hint')
         setOfferQuantity(0)
         setPrice(0)
     }
@@ -52,15 +53,8 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
             </button> 
             <form onSubmit={handleAddSystemStore} className='flex flex-col items-center p-3 gap-3'>
                 <div className='flex flex-col text-center'>
-                    <label className='text-lg font-semibold' htmlFor="itemId">Item ID:</label>
-                    <input 
-                        className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus:border-gray-400 duration-150' 
-                        type="number" 
-                        name='itemId'
-                        id='itemId' 
-                        placeholder={itemId}
-                        onChange={e => setItemId(e.target.value)}
-                        required /> 
+                    <label className='text-lg font-semibold' htmlFor="itemList">Item Name:</label>
+                    <DropDownItemList setItemName={setItemName} />
                 </div>
                 <div className='flex flex-col text-center'>
                     <label className='text-lg font-semibold' htmlFor="offerQuantity">Offer Quantity:</label>

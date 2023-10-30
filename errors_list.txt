@@ -1,0 +1,6 @@
+errors in admin web app:
+
+- unable to delete from game store
+- unable to delete from system store
+- unable to delete from items
+- unable to delete from items but will delete the image from storage
