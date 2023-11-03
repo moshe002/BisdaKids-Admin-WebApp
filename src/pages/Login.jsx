@@ -9,14 +9,15 @@ function Login({ setIsLoggedIn }) {
 
     const navigate = useNavigate()
 
-    const [loginData, setLoginData] = useState({})
+    //const [userData, setUserData] = useState([]) // fetched data
+    const [loginData, setLoginData] = useState({}) // data from login form
     const [displayLoading, setDisplayLoading] = useState(false)
     const [errorMessage, setErrorMessage] = useState('')
     const [displayError, setDisplayError] = useState(false)
 
     const handleLogin = (e) => {
         e.preventDefault()
-        fetchData()
+        fetchData() 
     }
 
     /* local connection to php file 
@@ -32,49 +33,32 @@ function Login({ setIsLoggedIn }) {
 
     const fetchData = async () => {
         setDisplayLoading(true)
-        let emailExist = ''
-        let passwordExist = ''
-        // checks email
         const { data, error } = await supabase
         .from('admin_accounts')
         .select()
-        .eq('email', `${loginData.loginfo}`)
 
-        if(data){
-            emailExist = data.length.toString()
-            //console.log(emailExist)
-        }
+        data && loginLogic(data)
         error && console.error(error)
+    }
 
-        // checks password
-        const { data:passwordData, error:passwordError } = await supabase
-        .from('admin_accounts')
-        .select()
-        .eq('password', `${loginData.password}`)
-
-        if(passwordData){
-            passwordExist = passwordData.length.toString()
-            //console.log(passwordExist) 
-        }
-        passwordError && console.log(passwordError)
-
-        if(emailExist == '0' && passwordExist == '0'){
-            setDisplayError(true)
-            setErrorMessage('Account does not exist')
-            setDisplayLoading(false)
-        } else if (emailExist == '1' && passwordExist == '0') {
-            setDisplayError(true)
-            setErrorMessage('Password does not exist')
-            setDisplayLoading(false)
-        } else if (emailExist == '0' && passwordExist == '1') {
-            setDisplayError(true)
-            setErrorMessage('Email does not exist')
-            setDisplayLoading(false)
-        } else {
-            setIsLoggedIn(true)
-            localStorage.setItem('isLoggedIn', 'true');
-            navigate('/users') 
-        }
+    const loginLogic = (data) => {
+        data.forEach(item => {
+            if(loginData.email === item.email && loginData.password === item.password){
+                //console.log('login')
+                //console.log(loginData.email + ' ' + loginData.password)
+                setIsLoggedIn(true)
+                localStorage.setItem('isLoggedIn', 'true');
+                navigate('/users') 
+            } else if(loginData.password != item.password) {
+                setDisplayError(true)
+                setErrorMessage('Wrong Password')
+                setDisplayLoading(false)
+            } //else {
+            //     setDisplayError(true)
+            //     setErrorMessage('Invalid Credentials')
+            //     setDisplayLoading(false)
+            // }
+        })
     }
 
     const handleInputs = (e) => {
@@ -123,9 +107,9 @@ function Login({ setIsLoggedIn }) {
                     <input
                         className="bg-gray-200 p-3 rounded-md placeholder-black w-80 focus:outline-blue-500"
                         type="email" 
-                        id="loginfo" 
+                        id="email" 
                         placeholder="Enter email" 
-                        name="loginfo"
+                        name="email"
                         onChange={handleInputs} 
                         required />
                     <input

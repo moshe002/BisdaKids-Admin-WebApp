@@ -35,7 +35,7 @@ function Store() {
   // const handleClose = () => setOpen(false);
 
   return (
-    <div className={`${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} flex flex-col h-screen items-center gap-3`}>
+    <div className={`${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} flex flex-col h-screen items-center gap-3 overflow-auto`}>
       {successModal && <SuccessSubmit setSuccessModal={setSuccessModal} /> }
       <div className='flex justify-center items-center gap-14 mt-10'>
         <button

@@ -16,22 +16,22 @@ function TopNavbar({ setIsLoggedIn }) {
       <img className='w-38 h-16' src={Logo} alt="logo_image" />
       <div className='flex gap-10 p-3'>
         <Link to='/users'>
-          <TopNavbarButton text={'Users'} />
+          <TopNavbarButton text={'Users'} path={'/users'} />
         </Link>
         <Link to='/accountprogress'>
-          <TopNavbarButton text={'Account Progress'} />
+          <TopNavbarButton text={'Account Progress'} path={'/accountprogress'} />
         </Link>
         <Link to='/dailytasks'>
-          <TopNavbarButton text={'Daily Tasks'} />
+          <TopNavbarButton text={'Daily Tasks'} path={'/dailytasks'} />
         </Link>
         <Link to='/store'>
-          <TopNavbarButton text={'Store'} />
+          <TopNavbarButton text={'Store'} path={'/store'} />
         </Link>
         <Link to='/items'>
-          <TopNavbarButton text={'Items'} />
+          <TopNavbarButton text={'Items'} path={'/items'} />
         </Link>
         <Link to='/saletransac'>
-          <TopNavbarButton text={'Sale'} />
+          <TopNavbarButton text={'Sale'} path={'/saletransac'} />
         </Link>
       </div>
       <div className='flex gap-10'>

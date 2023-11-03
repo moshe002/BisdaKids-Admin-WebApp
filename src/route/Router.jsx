@@ -19,13 +19,13 @@ function Router() {
 
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-  const location = useLocation();
+  const location = useLocation()
 
   useEffect(() => {
     // Check if the user is logged in when the component mounts
-    const storedLoggedInStatus = localStorage.getItem('isLoggedIn');
+    const storedLoggedInStatus = localStorage.getItem('isLoggedIn')
     if (storedLoggedInStatus === 'true') {
-      setIsLoggedIn(true);
+      setIsLoggedIn(true)
     }
   }, []);
 
@@ -45,7 +45,7 @@ function Router() {
   //   '/admins'
   // ]
   
-  const shouldRenderNavbar = navbarRoutes.includes(location.pathname);
+  const shouldRenderNavbar = navbarRoutes.includes(location.pathname)
   //const shouldRenderUsersNav = userNavRoutes.includes(location.pathname)
 
   return (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState} from 'react'
 import { supabase } from '../../../supabase-config'
 import { IoMdAdd } from 'react-icons/io'
+import { format, parseISO } from 'date-fns'
 
 import DeleteSystemStore from './DeleteSystemStore'
 import EditSystemStore from './EditSystemStore'
@@ -86,13 +87,15 @@ function ViewSystemStoreData() {
                     </tr>
                     {
                         systemStoreData.map((data, index) => {
+                          const dataDate = parseISO(data.added_timestamp)
+                          const formattedDate = format(dataDate, 'MMM dd, yyyy HH:mm:ss')   
                           return (
                             <tr className='text-center' key={index}>
                               <td className='p-3 border-2'>{data.store_offer_id}</td>
                               <td className='p-3 border-2'>{data.item_name}</td>
                               <td className='p-3 border-2'>{data.offer_quantity}</td>
                               <td className='p-3 border-2'>{data.price}</td>
-                              <td className='p-3 border-2'>{data.added_timestamp}</td>
+                              <td className='p-3 border-2'>{formattedDate}</td>
                               <td>
                                 <EditSystemStore 
                                   systemStoreId={data.store_offer_id} 

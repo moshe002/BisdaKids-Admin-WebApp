@@ -15,7 +15,7 @@ function DailyTasks() {
   const [addTask, setAddTask] = useState(false)
 
   return (
-    <div className={`flex flex-col h-screen items-center py-5 gap-3 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'}`}>
+    <div className={`flex flex-col h-screen items-center py-5 gap-3 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
       { successSubmit && <SuccessAddModal setAddTask={setAddTask} setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
       {
         addTask

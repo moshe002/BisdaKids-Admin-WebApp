@@ -64,7 +64,7 @@ function Users() {
   // }
 
   return (
-    <div className='flex flex-col h-screen items-center p-5'>
+    <div className='flex flex-col items-center p-5'>
       {
         isLoading ? 
         <Loading />
