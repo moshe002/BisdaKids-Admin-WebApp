@@ -1,0 +1,31 @@
+In-Game Sales Transactions QUERY:
+SELECT
+    gt.transaction_id AS TransactionID,
+    gt.user_id AS UserID,
+    it.item_name AS ItemName,
+    gs.bundle_quantity AS ItemQuantity,
+    gs.price_coin AS "Price (Bisdakids Coins)",
+    gt.timestamp AS Timestamp
+FROM
+    public.game_transactions gt
+JOIN
+    public.game_store gs ON gt.bundle_id = gs.bundle_id
+JOIN
+    public.items it ON gs.item_id = it.item_id;
+
+
+System Store Sales Transactions QUERY:
+SELECT
+    st.sys_transac_id AS TransactionID,
+    st.paymongo_id AS PaymentID,
+    st.user_id AS UserID,
+    it.item_name AS ItemName,
+    ss.offer_quantity AS ItemQuantity,
+    ss.price AS Price,
+    st.time_stamp AS Timestamp
+FROM
+    public.system_transactions st
+JOIN
+    public.system_store ss ON st.store_offer_id = ss.store_offer_id
+JOIN
+    public.items it ON ss.item_id = it.item_id;

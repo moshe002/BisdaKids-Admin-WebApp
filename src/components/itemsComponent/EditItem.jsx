@@ -6,7 +6,7 @@ import { DarkModeContext } from '../../context/themeContext'
 import SuccessEditModal from '../SuccessEditModal'
 import ErrorModal from '../ErrorModal'
 
-function EditItem({ itemId, itemName, itemDesc, itemPrice, itemImage, setChecker }) {
+function EditItem({ itemId, itemName, itemDesc, itemImage, setChecker }) {
 
   const [showEditModal, setShowEditModal] = useState(false)
   const [successEdit, setSuccessEdit] = useState(false)
@@ -23,7 +23,6 @@ function EditItem({ itemId, itemName, itemDesc, itemPrice, itemImage, setChecker
           itemId={itemId}
           itemName={itemName}
           itemDesc={itemDesc}
-          itemPrice={itemPrice}
           itemImage={itemImage}
           setSuccessEdit={setSuccessEdit} /> 
       }
@@ -42,7 +41,6 @@ function EditModal({
   itemId, 
   itemName, 
   itemDesc, 
-  itemPrice, 
   itemImage, 
   setSuccessEdit 
 }) {
@@ -51,7 +49,6 @@ function EditModal({
 
   const [newItemName, setNewItemName] = useState(itemName)
   const [newItemDesc, setNewItemDesc] = useState(itemDesc)
-  const [newItemPrice, setNewItemPrice] = useState(itemPrice)
   const [newItemImage, setNewItemImage] = useState()
   const [loadingText, setLoadingText] = useState(false)
   const [displayError, setDisplayError] = useState(false)
@@ -82,7 +79,6 @@ function EditModal({
     .update({ 
         item_name: newItemName, 
         item_desc: newItemDesc, 
-        item_price: newItemPrice, 
         item_image_url : imgUrl //`${URL}/${newItemImage}`
       })
     .eq('item_id', itemId)
@@ -138,15 +134,6 @@ function EditModal({
               value={newItemDesc}
               onChange={e => setNewItemDesc(e.target.value)} >
             </textarea>
-          </div>
-          <div className='flex flex-col'>
-            <label htmlFor="itemPrice" className='text-lg font-semibold text-center'>Item Price:</label>
-            <input
-              placeholder={itemPrice}
-              //value={newCoinQuantity}
-              onChange={e => setNewItemPrice(e.target.value)}
-              className='outline-none border-2 focus:border-gray-400 rounded-md text-center text-black p-1' 
-              id='itemPrice' type="number" />
           </div>
           <div className='flex flex-col'>
             <label htmlFor="itemImage" className='text-lg font-semibold text-center'>Item Image:</label>

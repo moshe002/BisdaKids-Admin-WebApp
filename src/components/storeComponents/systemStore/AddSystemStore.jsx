@@ -10,7 +10,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
 
     const { darkMode } = useContext(DarkModeContext)
 
-    const [itemName, setItemName] = useState('hint')
+    const [itemName, setItemName] = useState(0)
     const [offerQuantity, setOfferQuantity] = useState(0)
     const [price, setPrice] = useState(0)
     const [loadingText, setLoadingText] = useState(false)
@@ -22,7 +22,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
         const { error } = await supabase
         .from('system_store')
         .insert({ 
-          item_name: itemName,
+          item_id: itemName, // inserts a number (item_id)
           offer_quantity: offerQuantity,
           price: price
         })
@@ -33,7 +33,7 @@ function AddSystemStore({ setDisplayAdd, setSuccessSubmit }) {
         setLoadingText(false)
         setDisplayAdd(false)
         setSuccessSubmit(true)
-        setItemName('hint')
+        setItemName(0)
         setOfferQuantity(0)
         setPrice(0)
     }

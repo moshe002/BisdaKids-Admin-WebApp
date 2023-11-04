@@ -58,7 +58,6 @@ function ViewItems({ checker, setChecker }) {
                             <th className='p-3 border-2'>Item ID</th>
                             <th className='p-3 border-2'>Item Name</th>
                             <th className='p-3 border-2'>Item Description</th>
-                            <th className='p-3 border-2'>Item Price</th>
                             <th className='p-3 border-2'>Item Image Name</th>
                             <th className='p-3 border-2'>Action</th>
                         </tr>
@@ -72,7 +71,6 @@ function ViewItems({ checker, setChecker }) {
                                         <td className='p-3 border-2'>{data.item_id}</td>
                                         <td className='p-3 border-2'>{data.item_name}</td>
                                         <td className='p-3 border-2'>{data.item_desc}</td>
-                                        <td className='p-3 border-2'>{data.item_price}</td>
                                         <td className='p-3 border-2'>{shortenedUrl}</td>
                                         <td className='p-2'>
                                             <EditItem 
@@ -80,7 +78,6 @@ function ViewItems({ checker, setChecker }) {
                                                 itemImage={data.item_image_url}
                                                 itemName={data.item_name}
                                                 itemDesc={data.item_desc}
-                                                itemPrice={data.item_price} 
                                                 setChecker={setChecker} />
                                             <DeleteItem imageUrl={data.item_image_url} itemId={data.item_id} setChecker={setChecker} />
                                         </td>

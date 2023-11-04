@@ -11,7 +11,6 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
 
   const [itemName, setItemName] = useState('')
   const [itemDesc, setItemDesc] = useState('')
-  const [itemPrice, setItemPrice] = useState(0)
   const [itemImage, setItemImage] = useState(null)
   const [loadingText, setLoadingText] = useState(false)
   const [displayError, setDisplayError] = useState(false)
@@ -49,7 +48,6 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
         {
           item_name: itemName,
           item_desc: itemDesc,
-          item_price: itemPrice,
           item_image_url: itemImageURL,
         },
       ])
@@ -63,7 +61,6 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
       setItemName('')
       setItemDesc('')
       setItemImage(null); // Clear the image state
-      setItemPrice(0)
     } catch (error) {
       setDisplayError(true)
       console.error(error)
@@ -106,16 +103,6 @@ function AddItem({ setDisplayAdd, setSuccessSubmit }) {
                 onChange={e => setItemDesc(e.target.value)}
                 required >
               </textarea>
-            </div>
-            <div className='flex flex-col text-center'>
-              <label className='text-lg font-semibold' htmlFor="itemPrice">Item Price:</label>
-              <input
-                className='rounded p-1 text-center text-black outline-none border-2 border-gray-300 focus-border-gray-400 duration-150'
-                type="number"
-                id='itemPrice'
-                value={itemPrice}
-                onChange={e => setItemPrice(e.target.value)}
-                required />
             </div>
             <div className='flex flex-col text-center'>
               <label className='text-lg font-semibold' htmlFor="itemImage">Item Image:</label>

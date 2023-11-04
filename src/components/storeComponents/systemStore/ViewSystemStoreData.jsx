@@ -14,7 +14,7 @@ function ViewSystemStoreData() {
     // add crud to system store (add, edit, delete)
 
     const [systemStoreData, setSystemStoreData] = useState([])
-    //const [itemName, setItemName] = useState([])
+    const [itemName, setItemName] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [checker, setChecker] = useState(false)
     const [displayAdd, setDisplayAdd] = useState(false)
@@ -35,25 +35,25 @@ function ViewSystemStoreData() {
       setSystemStoreData(data)
     }
     error && console.log(error)
-    //await fetchItemName()
+    await fetchItemName()
     setIsLoading(false)
   }
 
-  // const fetchItemName = async () => {
-  //   const { data, error } = await supabase
-  //   .from('system_store')
-  //   .select(`
-  //     item_id,
-  //     items (
-  //       item_name
-  //     )
-  //   `)
-  //   if(data){
-  //     //console.log(data[0].items.item_name)
-  //     setItemName(data)
-  //   }
-  //   error && console.error(error)
-  // }
+  const fetchItemName = async () => {
+    const { data, error } = await supabase
+    .from('system_store')
+    .select(`
+      item_id,
+      items (
+        item_name
+      )
+    `)
+    if(data){
+      //console.log(data[0].items.item_name)
+      setItemName(data)
+    }
+    error && console.error(error)
+  }
   //<td className='p-3 border-2'>{itemName[index].items.item_name}</td>
 
   return (
@@ -92,7 +92,7 @@ function ViewSystemStoreData() {
                           return (
                             <tr className='text-center' key={index}>
                               <td className='p-3 border-2'>{data.store_offer_id}</td>
-                              <td className='p-3 border-2'>{data.item_name}</td>
+                              <td className='p-3 border-2'>{itemName[index].items.item_name}</td>
                               <td className='p-3 border-2'>{data.offer_quantity}</td>
                               <td className='p-3 border-2'>{data.price}</td>
                               <td className='p-3 border-2'>{formattedDate}</td>

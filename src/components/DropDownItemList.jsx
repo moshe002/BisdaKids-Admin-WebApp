@@ -1,6 +1,24 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { supabase } from '../supabase-config'
 
 function DropDownItemList({ setItemName }) {
+
+  const [items, setItems] = useState([])
+
+  useEffect(() => {
+    fetchItems()
+  }, [])
+
+  const fetchItems = async () => {
+    const { data, error } = await supabase
+    .from('items')
+    .select()
+    if(data){
+        //console.log(data)
+        setItems(data)
+    } 
+    error && console.error(error)
+  }
 
   return (
     <select
@@ -9,9 +27,13 @@ function DropDownItemList({ setItemName }) {
       name="itemList" 
       id="itemList"
       required>
-        <option value="hint">Hint</option>
-        <option value="time freeze">Time Freeze</option>
-        <option value="energy">Energy</option>
+      {
+        items.map((data, index) => {
+          return(
+            <option key={index} value={data.item_id}>{data.item_name}</option>
+          )
+        })
+      }
     </select>
   )
 }

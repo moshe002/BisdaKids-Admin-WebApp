@@ -10,7 +10,7 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
 
     const { darkMode } = useContext(DarkModeContext)
 
-    const [itemName, setItemName] = useState('hint')
+    const [itemName, setItemName] = useState(0)
     const [bundleQuantity, setBundleQuantity] = useState(0)
     const [priceCoin, setPriceCoin] = useState(0)
     const [time, setTime] = useState('')
@@ -20,10 +20,14 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
     const handleSubmitBundle = async (e) => {
         e.preventDefault()
         setLoadingText(true)
+        // console.log(itemName)
+        // console.log(bundleQuantity)
+        // console.log(priceCoin)
+        // console.log(time)
         const { error } = await supabase
         .from('game_store')
         .insert({ 
-          item_name: itemName,
+          item_id: itemName,
           bundle_quantity: bundleQuantity,
           price_coin: priceCoin,
           added_timestamp: time
@@ -35,7 +39,7 @@ function AddGameStore({ setDisplayAdd, setSuccessSubmit }) {
         setLoadingText(false)
         setSuccessSubmit(true)
         setDisplayAdd(false)
-        setItemName('hint')
+        setItemName(0)
         setBundleQuantity(0)
         setPriceCoin(0)
         setTime('')
