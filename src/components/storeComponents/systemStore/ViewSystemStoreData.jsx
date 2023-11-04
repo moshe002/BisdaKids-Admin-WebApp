@@ -96,7 +96,7 @@ function ViewSystemStoreData() {
                               <td className='p-3 border-2'>{data.offer_quantity}</td>
                               <td className='p-3 border-2'>{data.price}</td>
                               <td className='p-3 border-2'>{formattedDate}</td>
-                              <td>
+                              <td className='p-2'>
                                 <EditSystemStore 
                                   systemStoreId={data.store_offer_id} 
                                   offerQuantity={data.offer_quantity}

@@ -64,7 +64,7 @@ function Users() {
   // }
 
   return (
-    <div className='flex flex-col items-center p-5'>
+    <div className='flex flex-col items-center p-5 overflow-auto'>
       {
         isLoading ? 
         <Loading />
@@ -87,8 +87,12 @@ function Users() {
                                     <td className='p-3 border-2'>{data.user_id}</td>
                                     <td className='p-3 border-2'>{data.user_name}</td>
                                     <td className='p-3 border-2'>{data.user_password}</td>
-                                    <td>
-                                      <EditUserButton setChecker={setChecker} userId={data.user_id} username={data.user_name} password={data.user_password} />
+                                    <td className='p-2'>
+                                      <EditUserButton 
+                                        setChecker={setChecker} 
+                                        userId={data.user_id} 
+                                        username={data.user_name} 
+                                        password={data.user_password} />
                                       <DeleteUserButton username={data.user_name} userId={data.user_id} setChecker={setChecker} />
                                     </td>
                                 </tr>

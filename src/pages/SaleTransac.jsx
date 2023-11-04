@@ -1,68 +1,34 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { supabase } from '../supabase-config'
+import React, { useState, useContext } from 'react'
 import { DarkModeContext } from '../context/themeContext'
-import { format, parseISO } from 'date-fns'
 
-import Loading from '../components/Loading'
+import GameTransactions from '../components/saleTransactions/GameTransactions'
+import SystemTransactions from '../components/saleTransactions/SystemTransactions'
 
-function SaleTransac() {
+function Users() {
 
   const { darkMode } = useContext(DarkModeContext)
 
-  const [saleTransac, setSaleTransac] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    fetchSaleTransactions()
-  }, [])
-  
-  const fetchSaleTransactions = async () => {
-    setLoading(true)
-    const { data, error } = await supabase
-    .from('game_transactions')
-    .select()
-    if(data) {
-      setSaleTransac(data)
-    }
-    error && console.error(error)
-    setLoading(false)
-  }
+  const [renderThis, setRenderThis] = useState(true)
 
   return (
-    <div className={`flex flex-col h-screen gap-5 items-center p-3 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
-      <h1 className='font-bold text-2xl text-red-500 mt-8'>Sale Transactions</h1>
+    <div className={`${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} flex flex-col items-center h-screen gap-3`}>
+      <div className='flex justify-center items-center gap-14 mt-10'>
+        <button
+          className={`border-b-2 border-blue-400 text-2xl font-semibold ${renderThis ? 'opacity-100' : 'opacity-40'}`} 
+          onClick={() => setRenderThis(!false) }>
+            Game
+        </button>
+        <button 
+          className={`border-b-2 border-blue-400 text-2xl font-semibold ${!renderThis ? 'opacity-100' : 'opacity-40'}`}
+          onClick={() => setRenderThis(!true)}>
+            System
+        </button>
+      </div>
       {
-        loading
-        ?
-        <Loading />
-        :
-        <table className='table-auto'>
-          <tbody>
-            <tr>
-              <th className='p-3 border-2'>Transaction ID</th>
-              <th className='p-3 border-2'>Bundle ID</th>
-              <th className='p-3 border-2'>User ID</th>
-              <th className='p-3 border-2'>Timestamp</th>
-            </tr>
-            {
-              saleTransac.map((data, index) => {
-                const dataDate = parseISO(data.timestamp)
-                const formattedDate = format(dataDate, 'MMM dd, yyyy HH:mm:ss') 
-                return (
-                  <tr className='text-center' key={index}>
-                    <td className='p-3 border-2'>{data.transaction_id}</td>
-                    <td className='p-3 border-2'>{data.bundle_id}</td>
-                    <td className='p-3 border-2'>{data.user_id}</td>
-                    <td className='p-3 border-2'>{formattedDate}</td>
-                  </tr>
-                )
-              })
-            }
-          </tbody>
-        </table>
+        renderThis ? <GameTransactions /> : <SystemTransactions />
       }
-    </div>
+    </div>   
   )
 }
 
-export default SaleTransac
+export default Users

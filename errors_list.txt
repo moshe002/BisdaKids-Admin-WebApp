@@ -12,5 +12,6 @@ errors in admin web app:
 - ~ui height on dark mode~
 - ~top navbar ui (dapat obvious nga naa ka ana nga page)~
 - ~timestamps format~
-- sale transaction page (system store & in-game store)
+- ~sale transaction page (system store & in-game store)~
+- ~change icon to BisdaKids icon~
 - system store and game store add, edit and delete functions (check database)

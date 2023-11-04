@@ -41,7 +41,7 @@ function ViewAdminData() {
   }
 
   return (
-    <div className='flex flex-col h-screen items-center p-5'>
+    <div className='flex flex-col items-center p-5 overflow-auto'>
       <h1 className='text-2xl font-semibold p-3'>All Admin Accounts</h1>
       <div className='p-3'>
       { 
@@ -69,7 +69,7 @@ function ViewAdminData() {
                         <td className='p-3 border-2'>{data.username}</td>
                         <td className='p-3 border-2'>{data.email}</td>
                         <td className='p-3 border-2'>{data.contactNo}</td>
-                        <td>                   
+                        <td className='p-2'>                   
                           <EditAdmin
                             setChecker={setChecker}
                             userId={data.id}

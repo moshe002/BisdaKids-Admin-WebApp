@@ -113,7 +113,7 @@ function ViewGameStoreData() {
                               <td className='p-3 border-2'>{data.bundle_quantity}</td>
                               <td className='p-3 border-2'>{data.price_coin}</td>
                               <td className='p-3 border-2'>{formattedDate}</td>
-                              <td className='p-1'>
+                              <td className='p-2'>
                                 <EditGameStoreData
                                         bundleID={data.bundle_id}
                                         itemName={data.item_name}
