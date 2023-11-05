@@ -42,6 +42,7 @@ function SystemTransac() {
               <th className='p-3 border-2'>Transaction ID</th>
               <th className='p-3 border-2'>Store Offer ID</th>
               <th className='p-3 border-2'>User ID</th>
+              <th className='p-3 border-2'>Paymongo ID</th>
               <th className='p-3 border-2'>Timestamp</th>
             </tr>
             {
@@ -53,6 +54,7 @@ function SystemTransac() {
                     <td className='p-3 border-2'>{data.sys_transac_id}</td>
                     <td className='p-3 border-2'>{data.store_offer_id}</td>
                     <td className='p-3 border-2'>{data.user_id}</td>
+                    <td className='p-3 border-2'>{data.paymongo_id}</td>
                     <td className='p-3 border-2'>{formattedDate}</td>
                   </tr>
                 )
