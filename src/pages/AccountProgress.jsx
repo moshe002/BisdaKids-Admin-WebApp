@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import { supabase } from '../supabase-config'
 import { DarkModeContext } from '../context/themeContext'
 import { format, parseISO } from 'date-fns'
 
 import Loading from '../components/Loading'
+import DownloadAsFile from '../components/DownloadAsFile'
 
 function AccountProgress() {
+
+    const tableRef = useRef(null)
 
     const { darkMode } = useContext(DarkModeContext)
 
@@ -31,13 +34,16 @@ function AccountProgress() {
 
   return (
     <div className={`flex flex-col h-screen items-center p-3 gap-5 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
-        <h1 className='text-2xl text-center font-bold text-green-500 mt-8'>Account Progress</h1>
+        <div className='flex justify-center items-center gap-3 mt-8'>
+            <h1 className='text-2xl text-center font-bold text-green-500'>Account Progress</h1>
+            <DownloadAsFile tableData={tableRef.current} text={'Account Progress'}/>
+        </div>
         {
             loading
             ?
             <Loading />
             :
-            <table className='table-auto'>
+            <table className='table-auto' ref={tableRef}>
                 <tbody>
                     <tr>
                         <th className='p-3 border-2'>User ID</th>
