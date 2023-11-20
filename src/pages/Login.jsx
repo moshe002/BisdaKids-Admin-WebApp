@@ -120,7 +120,11 @@ function Login({ setIsLoggedIn }) {
                         name="password"
                         onChange={handleInputs} 
                         required />
-                        <a href="" className="absolute text-xs text-gray-400 right-32 sm:right-1 -bottom-6">Forgot Password?</a>
+                        {
+                            /*
+                            <a href="" className="absolute text-xs text-gray-400 right-32 sm:right-1 -bottom-6">Forgot Password?</a>
+                            */
+                        }
                     <input 
                         className="bg-blue-500 p-3 rounded-md text-white w-80 cursor-pointer font-bold text-xl"
                         type="submit" 
