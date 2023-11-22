@@ -33,7 +33,7 @@ function AccountProgress() {
     }
 
   return (
-    <div className={`flex flex-col h-screen items-center p-3 gap-5 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
+    <div className={`flex flex-col h-full items-center p-3 gap-5 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
         <div className='flex justify-center items-center gap-3 mt-8'>
             <h1 className='text-2xl text-center font-bold text-green-500'>Account Progress</h1>
             <DownloadAsFile tableData={tableRef.current} text={'Account Progress'}/>
