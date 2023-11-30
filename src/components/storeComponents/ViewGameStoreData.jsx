@@ -74,7 +74,7 @@ function ViewGameStoreData() {
   // }
 
   return (
-    <div className='flex flex-col items-center p-5'>
+    <div className='flex flex-col items-center p-5 overflow-auto'>
       {
         isLoading 
         ? 

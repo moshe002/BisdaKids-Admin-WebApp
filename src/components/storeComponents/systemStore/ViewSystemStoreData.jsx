@@ -57,7 +57,7 @@ function ViewSystemStoreData() {
   //<td className='p-3 border-2'>{itemName[index].items.item_name}</td>
 
   return (
-    <div className='flex flex-col items-center p-5'>
+    <div className='flex flex-col items-center p-5 overflow-auto'>
       {
         isLoading 
         ? 

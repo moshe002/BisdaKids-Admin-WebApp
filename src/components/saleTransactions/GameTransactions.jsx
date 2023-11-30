@@ -14,6 +14,7 @@ function GameTransac() {
 
   const [gameTransac, setGameTransac] = useState([])
   const [loading, setLoading] = useState(false)
+  const [bundleId, setBundleId] = useState([])
 
   useEffect(() => {
     fetchGameTransactions()
@@ -26,9 +27,22 @@ function GameTransac() {
     .select()
     if(data) {
         setGameTransac(data)
+        data.forEach(element => fetchCoinPrice(element.bundle_id))
     }
     error && console.error(error)
     setLoading(false)
+  }
+
+  const fetchCoinPrice = async (bundle_id) => {
+    const { data, error } = await supabase
+    .from('game_store')
+    .select('price_coin')
+    .eq('bundle_id', bundle_id)
+    if(data){
+      //console.log(data)
+      setBundleId(data.map(el => el.price_coin))
+    }
+    error && console.error(error)
   }
 
   return (
@@ -48,6 +62,7 @@ function GameTransac() {
               <th className='p-3 border-2'>Transaction ID</th>
               <th className='p-3 border-2'>Bundle ID</th>
               <th className='p-3 border-2'>User ID</th>
+              <th className='p-3 border-2'>Coin Price</th>
               <th className='p-3 border-2'>Timestamp</th>
             </tr>
             {
@@ -59,6 +74,7 @@ function GameTransac() {
                     <td className='p-3 border-2'>{data.transaction_id}</td>
                     <td className='p-3 border-2'>{data.bundle_id}</td>
                     <td className='p-3 border-2'>{data.user_id}</td>
+                    <td className='p-3 border-2'>{bundleId}</td>
                     <td className='p-3 border-2'>{formattedDate}</td>
                   </tr>
                 )
