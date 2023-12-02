@@ -13,8 +13,11 @@ function GameTransac() {
   const { darkMode } = useContext(DarkModeContext)
 
   const [gameTransac, setGameTransac] = useState([])
+  const [gameUsername, setGameUsername] = useState([])
+  const [gameItemName, setGameItemName] = useState([])
+  const [coinPrice, setCoinPrice] = useState([])
+  const [quantity, setQuantity] = useState([])
   const [loading, setLoading] = useState(false)
-  const [bundleId, setBundleId] = useState([])
 
   useEffect(() => {
     fetchGameTransactions()
@@ -27,22 +30,90 @@ function GameTransac() {
     .select()
     if(data) {
         setGameTransac(data)
-        data.forEach(element => fetchCoinPrice(element.bundle_id))
+        //data.forEach(element => fetchCoinPrice(element.bundle_id))
     }
     error && console.error(error)
+    await fetchUsername()
+    await fetchItemName()
+    await fetchCoinPrice()
+    await fetchQuantity()
     setLoading(false)
   }
 
-  const fetchCoinPrice = async (bundle_id) => {
+  const fetchUsername = async () => {
     const { data, error } = await supabase
-    .from('game_store')
-    .select('price_coin')
-    .eq('bundle_id', bundle_id)
+    .from('game_transactions')
+    .select(`
+      user_id,
+      user_account (
+        user_name
+      )
+    `)
     if(data){
       //console.log(data)
-      setBundleId(data.map(el => el.price_coin))
+      setGameUsername(data)
     }
     error && console.error(error)
+  }
+
+  const fetchItemName = async () => {
+    const { data, error } = await supabase
+    .from('game_transactions')
+    .select(`
+      bundle_id,
+      game_store (
+        item_id, 
+          items (
+            item_name
+          )
+      )
+    `)
+    if(data){
+      //console.log(data)
+      setGameItemName(data)
+    }
+    error && console.error(error)
+  }
+  
+  const fetchCoinPrice = async () => {
+    const { data, error } = await supabase
+    .from('game_transactions')
+    .select(`
+      bundle_id,
+      game_store (
+        price_coin
+      )
+    `)
+    if(data){
+      //console.log(data)
+      setCoinPrice(data)
+    }
+    error && console.error(error)
+  }
+
+  const fetchQuantity = async () => {
+    const { data, error } = await supabase
+    .from('game_transactions')
+    .select(`
+      bundle_id,
+      game_store (
+        bundle_quantity
+      )
+    `)
+    if(data){
+      //console.log(data)
+      setQuantity(data)
+    }
+    error && console.error(error)
+  }
+
+  const totalProfit = () => {
+    let totalProfit = 0
+    for(let price of coinPrice){
+      let value = price.game_store.price_coin
+      totalProfit += value
+    }
+    return totalProfit
   }
 
   return (
@@ -57,14 +128,17 @@ function GameTransac() {
         <Loading />
         :
         <table className='table-auto' ref={tableRef}>
-          <tbody>
+          <thead>
             <tr>
-              <th className='p-3 border-2'>Transaction ID</th>
-              <th className='p-3 border-2'>Bundle ID</th>
-              <th className='p-3 border-2'>User ID</th>
-              <th className='p-3 border-2'>Coin Price</th>
-              <th className='p-3 border-2'>Timestamp</th>
-            </tr>
+                <th className='p-3 border-2'>Transaction ID</th>
+                <th className='p-3 border-2'>Username</th>
+                <th className='p-3 border-2'>Item Name</th>
+                <th className='p-3 border-2'>Quantity</th>
+                <th className='p-3 border-2'>Coin Price</th>
+                <th className='p-3 border-2'>Timestamp</th>
+              </tr>
+          </thead>
+          <tbody>
             {
               gameTransac.map((data, index) => {
                 const dataDate = parseISO(data.timestamp)
@@ -72,14 +146,19 @@ function GameTransac() {
                 return (
                   <tr className='text-center' key={index}>
                     <td className='p-3 border-2'>{data.transaction_id}</td>
-                    <td className='p-3 border-2'>{data.bundle_id}</td>
-                    <td className='p-3 border-2'>{data.user_id}</td>
-                    <td className='p-3 border-2'>{bundleId}</td>
+                    <td className='p-3 border-2'>{gameUsername[index].user_account.user_name}</td>
+                    <td className='p-3 border-2'>{gameItemName[index].game_store.items.item_name}</td>
+                    <td className='p-3 border-2'>{quantity[index].game_store.bundle_quantity}</td>
+                    <td className='p-3 border-2'>{coinPrice[index].game_store.price_coin}</td>
                     <td className='p-3 border-2'>{formattedDate}</td>
                   </tr>
                 )
               })
             }
+            <tr>
+              <td className='text-center font-bold p-3 border-2' colSpan={5}>Total Profit:</td>
+              <td className='text-center font-bold p-3 border-2'>{totalProfit()}</td>
+            </tr>
           </tbody>
         </table>
       }

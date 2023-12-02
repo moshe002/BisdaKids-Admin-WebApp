@@ -13,6 +13,7 @@ function AccountProgress() {
     const { darkMode } = useContext(DarkModeContext)
 
     const [dataAccountProgress, setDataAccountProgress] = useState([])
+    const [userAccount, setUserAccount] = useState([])
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -29,7 +30,24 @@ function AccountProgress() {
             setDataAccountProgress(data)
         }
         error && console.error(error)
+        await fetchUsername()
         setLoading(false)
+    }
+
+    const fetchUsername = async () => {
+        const { data, error } = await supabase
+        .from('account_progress')
+        .select(`
+            user_id,
+            user_account (
+                user_name
+            )
+        `)
+        if(data) {
+            //console.log(data)
+            setUserAccount(data)
+        }
+        error && console.error(error)
     }
 
   return (
@@ -46,9 +64,9 @@ function AccountProgress() {
             <table className='table-auto' ref={tableRef}>
                 <tbody>
                     <tr>
-                        <th className='p-3 border-2'>User ID</th>
+                        <th className='p-3 border-2'>Username</th>
                         <th className='p-3 border-2'>Level ID</th>
-                        <th className='p-3 border-2'>Highscore</th>
+                        <th className='p-3 border-2'>Highscore (5000)</th>
                         <th className='p-3 border-2'>Timestamp</th>
                     </tr>
                     {
@@ -58,8 +76,8 @@ function AccountProgress() {
                             const formattedDate = format(dataDate, 'MMM dd, yyyy HH:mm:ss') 
                             return (
                                 <tr className='text-center' key={index}>
-                                    <td className='p-3 border-2'>{data.user_id}</td>
-                                    <td className='p-3 border-2'>{data.level_id}</td>
+                                    <td className='p-3 border-2'>{userAccount[index].user_account.user_name}</td>
+                                    <td className='p-3 border-2'>Level {data.level_id}</td>
                                     <td className='p-3 border-2'>{data.highscore}</td>
                                     <td className='p-3 border-2'>{formattedDate}</td>
                                 </tr>

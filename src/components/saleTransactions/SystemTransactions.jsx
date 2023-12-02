@@ -13,6 +13,10 @@ function SystemTransac() {
   const { darkMode } = useContext(DarkModeContext)
 
   const [systenTransac, setSystemTransac] = useState([])
+  const [username, setUsername] = useState([])
+  const [itemName, setItemName] = useState([])
+  const [quantity, setQuantity] = useState([])
+  const [price, setPrice] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
@@ -28,7 +32,86 @@ function SystemTransac() {
         setSystemTransac(data)
     }
     error && console.error(error)
+    await fetchUsername()
+    await fetchItemName()
+    await fetchQuantity()
+    await fetchPrice()
     setLoading(false)
+  }
+
+  const fetchUsername = async () => {
+    const { data, error } = await supabase
+    .from('system_transactions')
+    .select(`
+      user_id,
+      user_account (
+        user_name
+      )
+    `)
+    if(data) {
+      //console.log(data)
+      setUsername(data)
+    }
+    error && console.error(error)
+  }
+
+  const fetchItemName = async () => {
+    const { data, error } = await supabase
+    .from('system_transactions')
+    .select(`
+      store_offer_id,
+      system_store (
+        item_id, 
+          items (
+            item_name
+          )
+      )
+    `)
+    if(data) {
+      setItemName(data)
+    }
+    error && console.error(error)
+  }
+
+  const fetchQuantity = async () => {
+    const { data, error } = await supabase
+    .from('system_transactions')
+    .select(`
+      store_offer_id,
+      system_store (
+        offer_quantity
+      )
+    `)
+    if(data) {
+      //console.log(data)
+      setQuantity(data)
+    }
+    error && console.error(error)
+  }
+
+  const fetchPrice = async () => {
+    const { data, error } = await supabase
+    .from('system_transactions')
+    .select(`
+      store_offer_id,
+      system_store (
+        price
+      )
+    `)
+    if(data) {
+      //console.log(data)
+      setPrice(data)
+    }
+    error && console.error(error)
+  }
+
+  const totalProfit = () => {
+    let totalProfit = 0
+    for(let p of price){
+      let value = p.system_store.price
+      totalProfit += value
+    }
+    return totalProfit
   }
 
   return (
@@ -46,26 +129,36 @@ function SystemTransac() {
           <tbody>
             <tr>
               <th className='p-3 border-2'>Transaction ID</th>
-              <th className='p-3 border-2'>Store Offer ID</th>
-              <th className='p-3 border-2'>User ID</th>
+              <th className='p-3 border-2'>Username</th>
+              <th className='p-3 border-2'>Item Name</th>
+              <th className='p-3 border-2'>Quantity</th>
+              <th className='p-3 border-2'>Price</th>
               <th className='p-3 border-2'>Paymongo ID</th>
               <th className='p-3 border-2'>Timestamp</th>
             </tr>
             {
               systenTransac.map((data, index) => {
-                const dataDate = parseISO(data.time_stamp)
+                const timeStamp = data.timestamp
+                const correctedTimestamp = timeStamp.replace(' ', 'T');
+                const dataDate = parseISO(correctedTimestamp)
                 const formattedDate = format(dataDate, 'MMM dd, yyyy HH:mm:ss') 
                 return (
                   <tr className='text-center' key={index}>
                     <td className='p-3 border-2'>{data.sys_transac_id}</td>
-                    <td className='p-3 border-2'>{data.store_offer_id}</td>
-                    <td className='p-3 border-2'>{data.user_id}</td>
+                    <td className='p-3 border-2'>{username[index].user_account.user_name}</td>
+                    <td className='p-3 border-2'>{itemName[index].system_store.items.item_name}</td>
+                    <td className='p-3 border-2'>{quantity[index].system_store.offer_quantity}</td>
+                    <td className='p-3 border-2'>{price[index].system_store.price}</td>
                     <td className='p-3 border-2'>{data.paymongo_id}</td>
                     <td className='p-3 border-2'>{formattedDate}</td>
                   </tr>
                 )
               })
             }
+            <tr>
+              <td className='text-center font-bold p-3 border-2' colSpan={6}>Total Profit:</td>
+              <td className='text-center font-bold p-3 border-2'>{totalProfit()}</td>
+            </tr>
           </tbody>
         </table>
       }

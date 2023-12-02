@@ -56,7 +56,7 @@ function Items() {
 
   return (
     <>
-    <div className={`flex flex-col h-screen items-center p-3 gap-5 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
+    <div className={`flex flex-col h-screen items-center p-3 gap-5 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'}`}>
       {successModal && <SuccessSubmit setSuccessModal={setSuccessModal} /> }
       <ViewItems checker={checker} setChecker={setChecker} />  
       {/* <Button onClick={handleOpen} variant='contained'>Add Item</Button>

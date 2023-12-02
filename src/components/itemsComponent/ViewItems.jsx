@@ -37,7 +37,7 @@ function ViewItems({ checker, setChecker }) {
     <>
         { successSubmit && <SuccessAddModal setSuccessSubmit={setSuccessSubmit} setChecker={setChecker} /> }
         { displayAdd && <AddItem setDisplayAdd={setDisplayAdd} setSuccessSubmit={setSuccessSubmit} /> }
-        <div className='flex flex-col items-center gap-5 mt-10'>
+        <div className='flex flex-col items-center p-3 gap-5 mt-10 overflow-auto'>
             <div className='flex gap-3'>
                 <h1 className='font-bold text-2xl text-green-500'>Items</h1>
                 <button onClick={() => setDisplayAdd(true)} title='add button' className='hover:bg-green-500 bg-green-400 rounded-full p-1' type='button'>
@@ -58,20 +58,22 @@ function ViewItems({ checker, setChecker }) {
                             <th className='p-3 border-2'>Item ID</th>
                             <th className='p-3 border-2'>Item Name</th>
                             <th className='p-3 border-2'>Item Description</th>
-                            <th className='p-3 border-2'>Item Image Name</th>
+                            <th className='p-3 border-2'>Item Image</th>
                             <th className='p-3 border-2'>Action</th>
                         </tr>
                         {
                             itemsData.map((data, index) => {
-                                const urlParts = `${data.item_image_url}`.split('/')
-                                const shortenedUrl = urlParts[urlParts.length - 1];
-                                
+                                //const urlParts = `${data.item_image_url}`.split('/')
+                                //const shortenedUrl = urlParts[urlParts.length - 1];
+                                //console.log(data.item_image_url)
                                 return(
-                                    <tr key={index}>
+                                    <tr key={index} className="text-center">
                                         <td className='p-3 border-2'>{data.item_id}</td>
                                         <td className='p-3 border-2'>{data.item_name}</td>
                                         <td className='p-3 border-2'>{data.item_desc}</td>
-                                        <td className='p-3 border-2'>{shortenedUrl}</td>
+                                        <td className='flex justify-center p-3 border-2'>
+                                            <img className="w-14 h-14" src={data.item_image_url} alt="item_image" />
+                                        </td>
                                         <td className='p-2'>
                                             <EditItem 
                                                 itemId={data.item_id}
