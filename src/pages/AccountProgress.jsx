@@ -62,28 +62,30 @@ function AccountProgress() {
             <Loading />
             :
             <table className='table-auto' ref={tableRef}>
-                <tbody>
+                <thead>
                     <tr>
                         <th className='p-3 border-2'>Username</th>
                         <th className='p-3 border-2'>Level ID</th>
                         <th className='p-3 border-2'>Highscore (5000)</th>
                         <th className='p-3 border-2'>Timestamp</th>
                     </tr>
-                    {
-                        // map here the data from account_progress table
-                        dataAccountProgress.map((data, index) => {
-                            const dataDate = parseISO(data.timestamp)
-                            const formattedDate = format(dataDate, 'MMM dd, yyyy HH:mm:ss') 
-                            return (
-                                <tr className='text-center' key={index}>
-                                    <td className='p-3 border-2'>{userAccount[index].user_account.user_name}</td>
-                                    <td className='p-3 border-2'>Level {data.level_id}</td>
-                                    <td className='p-3 border-2'>{data.highscore}</td>
-                                    <td className='p-3 border-2'>{formattedDate}</td>
-                                </tr>
-                            )
-                        })
-                    }
+                </thead>
+                <tbody>
+                {
+                    // map here the data from account_progress table
+                    dataAccountProgress.map((data, index) => {
+                        const dataDate = parseISO(data.timestamp)
+                        const formattedDate = format(dataDate, 'MMM dd, yyyy HH:mm:ss') 
+                        return (
+                            <tr className='text-center' key={index}>
+                                <td className='p-3 border-2'>{userAccount[index].user_account.user_name}</td>
+                                <td className='p-3 border-2'>Level {data.level_id}</td>
+                                <td className='p-3 border-2'>{data.highscore}</td>
+                                <td className='p-3 border-2'>{formattedDate}</td>
+                            </tr>
+                        )
+                    })
+                }
                 </tbody>
             </table>
         }

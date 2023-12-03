@@ -130,13 +130,13 @@ function GameTransac() {
         <table className='table-auto' ref={tableRef}>
           <thead>
             <tr>
-                <th className='p-3 border-2'>Transaction ID</th>
-                <th className='p-3 border-2'>Username</th>
-                <th className='p-3 border-2'>Item Name</th>
-                <th className='p-3 border-2'>Quantity</th>
-                <th className='p-3 border-2'>Coin Price</th>
-                <th className='p-3 border-2'>Timestamp</th>
-              </tr>
+              <th className='p-3 border-2'>Transaction ID</th>
+              <th className='p-3 border-2'>Username</th>
+              <th className='p-3 border-2'>Item Name</th>
+              <th className='p-3 border-2'>Quantity</th>
+              <th className='p-3 border-2'>Timestamp</th>
+              <th className='p-3 border-2'>Coin Price</th>
+            </tr>
           </thead>
           <tbody>
             {
@@ -149,8 +149,8 @@ function GameTransac() {
                     <td className='p-3 border-2'>{gameUsername[index].user_account.user_name}</td>
                     <td className='p-3 border-2'>{gameItemName[index].game_store.items.item_name}</td>
                     <td className='p-3 border-2'>{quantity[index].game_store.bundle_quantity}</td>
-                    <td className='p-3 border-2'>{coinPrice[index].game_store.price_coin}</td>
                     <td className='p-3 border-2'>{formattedDate}</td>
+                    <td className='p-3 border-2'>{coinPrice[index].game_store.price_coin}</td>
                   </tr>
                 )
               })

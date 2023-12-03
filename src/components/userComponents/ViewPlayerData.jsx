@@ -103,7 +103,7 @@ function Users() {
   console.log()
 
   return (
-    <div className='flex flex-col items-center p-5 overflow-auto'>
+    <div className='flex flex-col items-center p-5'>
       {
         isLoading ? 
         <Loading />

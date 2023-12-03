@@ -126,16 +126,18 @@ function SystemTransac() {
         <Loading />
         :
         <table className='table-auto' ref={tableRef}>
-          <tbody>
+          <thead>
             <tr>
               <th className='p-3 border-2'>Transaction ID</th>
               <th className='p-3 border-2'>Username</th>
               <th className='p-3 border-2'>Item Name</th>
               <th className='p-3 border-2'>Quantity</th>
-              <th className='p-3 border-2'>Price</th>
               <th className='p-3 border-2'>Paymongo ID</th>
               <th className='p-3 border-2'>Timestamp</th>
+              <th className='p-3 border-2'>Price</th>
             </tr>
+          </thead>
+          <tbody>
             {
               systenTransac.map((data, index) => {
                 const timeStamp = data.timestamp
@@ -148,9 +150,9 @@ function SystemTransac() {
                     <td className='p-3 border-2'>{username[index].user_account.user_name}</td>
                     <td className='p-3 border-2'>{itemName[index].system_store.items.item_name}</td>
                     <td className='p-3 border-2'>{quantity[index].system_store.offer_quantity}</td>
-                    <td className='p-3 border-2'>{price[index].system_store.price}</td>
                     <td className='p-3 border-2'>{data.paymongo_id}</td>
                     <td className='p-3 border-2'>{formattedDate}</td>
+                    <td className='p-3 border-2'>{price[index].system_store.price}</td>
                   </tr>
                 )
               })

@@ -41,7 +41,7 @@ function ViewAdminData() {
   }
 
   return (
-    <div className='flex flex-col items-center p-5 overflow-auto'>
+    <div className='flex flex-col h-screen items-center p-5'>
       <h1 className='text-2xl font-semibold p-3'>All Admin Accounts</h1>
       <div className='p-3'>
       { 
