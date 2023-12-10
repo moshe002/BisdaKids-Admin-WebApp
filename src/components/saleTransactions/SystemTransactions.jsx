@@ -18,9 +18,18 @@ function SystemTransac() {
   const [quantity, setQuantity] = useState([])
   const [price, setPrice] = useState([])
   const [loading, setLoading] = useState(false)
+  const [currentDateTime, setCurrentDateTime] = useState(new Date())
 
   useEffect(() => {
     fetchSystemTransactions()
+  }, [])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+        setCurrentDateTime(new Date());
+      }, 1000);
+
+    return () => clearInterval(intervalId);
   }, [])
   
   const fetchSystemTransactions = async () => {
@@ -114,18 +123,23 @@ function SystemTransac() {
     return totalProfit
   }
 
+  const formattedDateTime = currentDateTime.toLocaleString();
+
   return (
     <div className={`flex flex-col gap-5 items-center p-3 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
       <div className='flex justify-center items-center gap-3 mt-8'>
-        <h1 className='font-bold text-2xl text-red-500'>System Transactions</h1>
-        <DownloadAsFile tableData={tableRef.current} text={'System Transactions'}/>
+        <h1 className='font-bold text-2xl text-red-500'>System Store Transactions</h1>
+        <DownloadAsFile tableData={tableRef.current} text={'System Store Transactions'}/>
       </div>
       {
         loading
         ?
         <Loading />
         :
-        <table className='table-auto' ref={tableRef}>
+        <div className='items-center' ref={tableRef}>
+        <h2 className='hidden text-center'>System Store Transactions</h2>
+        <h4 className='hidden text-center'>Date and Time on export: {formattedDateTime}</h4>
+        <table className='table-auto text-center'>
           <thead>
             <tr>
               <th className='p-3 border-2'>Transaction ID</th>
@@ -163,6 +177,7 @@ function SystemTransac() {
             </tr>
           </tbody>
         </table>
+        </div>
       }
     </div>
   )

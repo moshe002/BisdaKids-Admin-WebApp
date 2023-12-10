@@ -18,9 +18,18 @@ function GameTransac() {
   const [coinPrice, setCoinPrice] = useState([])
   const [quantity, setQuantity] = useState([])
   const [loading, setLoading] = useState(false)
+  const [currentDateTime, setCurrentDateTime] = useState(new Date())
 
   useEffect(() => {
     fetchGameTransactions()
+  }, [])
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+        setCurrentDateTime(new Date());
+      }, 1000);
+
+    return () => clearInterval(intervalId);
   }, [])
   
   const fetchGameTransactions = async () => {
@@ -116,6 +125,8 @@ function GameTransac() {
     return totalProfit
   }
 
+  const formattedDateTime = currentDateTime.toLocaleString();
+
   return (
     <div className={`flex flex-col gap-5 items-center p-3 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
       <div className='flex justify-center items-center gap-3 mt-8'>
@@ -127,7 +138,10 @@ function GameTransac() {
         ?
         <Loading />
         :
-        <table className='table-auto' ref={tableRef}>
+        <div ref={tableRef}>
+        <h2 className='hidden text-center'>Game Transactions</h2>
+        <h4 className='hidden text-center'>Date and Time on export: {formattedDateTime}</h4>
+        <table className='table-auto text-center'>
           <thead>
             <tr>
               <th className='p-3 border-2'>Transaction ID</th>
@@ -161,6 +175,7 @@ function GameTransac() {
             </tr>
           </tbody>
         </table>
+        </div>
       }
     </div>
   )

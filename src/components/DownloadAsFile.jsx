@@ -14,7 +14,7 @@ function DownloadAsFile({ tableData, text }) {
     <>
         <DownloadTableExcel
             filename={text}
-            sheet="Transactions"
+            sheet={text}
             currentTableRef={tableData}>
             <button 
                 className='p-2 rounded-full text-xl bg-green-400' 

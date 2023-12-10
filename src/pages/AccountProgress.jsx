@@ -15,9 +15,18 @@ function AccountProgress() {
     const [dataAccountProgress, setDataAccountProgress] = useState([])
     const [userAccount, setUserAccount] = useState([])
     const [loading, setLoading] = useState(false)
+    const [currentDateTime, setCurrentDateTime] = useState(new Date())
 
     useEffect(() => {
         fetchAccountProgress()
+    }, [])
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setCurrentDateTime(new Date());
+          }, 1000);
+
+        return () => clearInterval(intervalId);
     }, [])
 
     const fetchAccountProgress = async () => {
@@ -50,6 +59,8 @@ function AccountProgress() {
         error && console.error(error)
     }
 
+    const formattedDateTime = currentDateTime.toLocaleString();
+
   return (
     <div className={`flex flex-col h-full items-center p-3 gap-5 ${darkMode ? 'bg-zinc-600 text-white' : 'bg-white text-black'} overflow-auto`}>
         <div className='flex justify-center items-center gap-3 mt-8'>
@@ -61,7 +72,10 @@ function AccountProgress() {
             ?
             <Loading />
             :
-            <table className='table-auto' ref={tableRef}>
+            <div className='items-center' ref={tableRef}>
+            <h2 className='hidden text-center'>Account Progress</h2>
+            <h4 className='hidden text-center'>Date and Time on export: {formattedDateTime}</h4>
+            <table className='table-auto text-center'>
                 <thead>
                     <tr>
                         <th className='p-3 border-2'>Username</th>
@@ -88,6 +102,7 @@ function AccountProgress() {
                 }
                 </tbody>
             </table>
+            </div>
         }
     </div>
   )
