@@ -120,7 +120,13 @@ function SystemTransac() {
       let value = p.system_store.price
       totalProfit += value
     }
-    return totalProfit
+    const formattedNumber = totalProfit.toLocaleString('en-PH', {
+      style: 'currency',
+      currency: 'PHP',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    return formattedNumber
   }
 
   const formattedDateTime = currentDateTime.toLocaleString();
@@ -137,8 +143,10 @@ function SystemTransac() {
         <Loading />
         :
         <div className='items-center' ref={tableRef}>
-        <h2 className='hidden text-center'>System Store Transactions</h2>
+        <h1 className='hidden text-center'>BISDAKIDS: DUWA SA PAGPANGITA MOBILE GAME APPLICATION</h1>
+        <h2 className='hidden text-center'>Summary Report Title: System Store Transactions</h2>
         <h4 className='hidden text-center'>Date and Time on export: {formattedDateTime}</h4>
+        <h2 className='hidden text-center'>Total Profit: {totalProfit()}</h2>
         <table className='table-auto text-center'>
           <thead>
             <tr>

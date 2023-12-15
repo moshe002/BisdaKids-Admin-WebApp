@@ -73,7 +73,8 @@ function AccountProgress() {
             <Loading />
             :
             <div className='items-center' ref={tableRef}>
-            <h2 className='hidden text-center'>Account Progress</h2>
+            <h1 className='hidden text-center'>BISDAKIDS: DUWA SA PAGPANGITA MOBILE GAME APPLICATION</h1>
+            <h2 className='hidden text-center'>Summary Report Title: Account Progress</h2>
             <h4 className='hidden text-center'>Date and Time on export: {formattedDateTime}</h4>
             <table className='table-auto text-center'>
                 <thead>
